@@ -101,6 +101,7 @@
   .roadmap-example { margin:0 -8px; }
   .roadmap-nitty { margin:0 -8px; border-left:3px solid var(--gold); }
   .roadmap-example.open { max-height:520px; margin-bottom:16px; overflow-y:auto; }
+  #referralExamples.open { max-height:640px; }
   .roadmap-nitty.open { max-height:320px; padding:14px 20px; margin-bottom:16px; }
   .roadmap-example .ct-header { padding:10px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; background:#FFFFFF; }
   .roadmap-example .ct-body { padding:14px 18px; }
@@ -120,6 +121,20 @@
   .cc-notes .cc-author { color:var(--accent-deep); font-weight:600; margin-right:4px; }
   .roadmap-nitty ul { margin:0; padding-left:18px; color:var(--text); font-size:0.85em; line-height:1.7; }
   .roadmap-nitty li { margin-bottom:4px; }
+
+  /* Referral candidates list (bullet 4 example panel) */
+  .ref-row { background:#FFFFFF; border:1px solid #E6DFD9; border-radius:8px; padding:10px 14px; font-size:0.8rem; line-height:1.5; }
+  .ref-row.clear { border-left:3px solid var(--accent); }
+  .ref-row.potential { border-left:3px solid var(--gold); }
+  .ref-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .ref-badge { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; }
+  .ref-badge.clear { background:rgba(224,122,95,0.15); color:var(--accent-deep); }
+  .ref-badge.potential { background:rgba(232,184,125,0.22); color:#A8793A; }
+  .ref-convid { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:0.72rem; color:var(--text2); }
+  .ref-date { font-size:0.72rem; color:var(--text3); }
+  .ref-subtype { font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); font-weight:600; }
+  .ref-report { color:var(--text); white-space:pre-wrap; }
+  .ref-why { margin-top:6px; padding-top:6px; border-top:1px dashed #E6DFD9; font-size:0.74rem; color:var(--text2); font-style:italic; }
   .roadmap-num { font-family:'Lora',serif; font-size:2em; font-weight:700; color:var(--accent-deep); line-height:1; }
   .roadmap-what { font-weight:600; font-size:1.02em; }
   .roadmap-what .sub { font-weight:400; color:var(--text2); font-size:0.9em; margin-top:4px; }
@@ -719,7 +734,7 @@
           Hank facilitates contractor &amp; adjuster referrals.
           <div class="sub">When contractor/adjuster customers' callers mention insurance disputes, Hank brokers the intro to HSTA.</div>
           <div class="rm-chips">
-            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
+            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example calls (40)</button>
           </div>
         </div>
         <div class="roadmap-impact">
@@ -737,15 +752,12 @@
           <li>Assumes 50% conversion of clear-fit + 15% conversion of potential-fit at $26.6K avg HSTA fee</li>
         </ul>
       </div>
-      <div class="roadmap-example">
-        <div class="ct-header"><span>Real call · conv 54733 · Jul 22 2025 · homeowner calling a Y² public adjuster</span></div>
+      <div class="roadmap-example" id="referralExamples">
+        <div class="ct-header"><span>40 real prod calls · 16 clear fits + 24 potential fits · anonymized short_reports</span></div>
         <div class="ct-body">
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Hi, this is FW. [Calling about a denied insurance claim; needs a public adjuster's help.]</span></div>
-          <div class="ct-turn ai"><span class="sp">Adjuster's Hank</span><span class="tx">Thanks for reaching out. Sounds like your carrier denied the claim — our [user] handles these, but this also sounds like something where <strong>Hair Shunnarah Trial Attorneys would fight the denial with no fee unless they win.</strong> Want me to connect you now, or arrange a call?</span></div>
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Arrange a call. Today, sometime today.</span></div>
-          <div class="ct-turn ai"><span class="sp">Adjuster's Hank</span><span class="tx">Got it. Bridging you to Hair Shunnarah's intake now — they can pick up today. Stay with me.</span></div>
-          <div class="ct-turn ai"><span class="sp">Hank (HSTA)</span><span class="tx">Hi FW — this is Hank at Hair Shunnarah. Your adjuster's team just sent you over, saying you've got a denial on your hands. Let me grab the carrier name and the denial letter details so we can push back today.</span></div>
-          <div style="margin-top:10px; padding:8px 12px; background:rgba(224,122,95,0.08); border-left:3px solid var(--accent); font-size:0.78em; color:var(--text2); border-radius:0 6px 6px 0;">Fact pattern is a real Y²-customer call (adjuster user, Jul 22 2025, "needs a public adjuster for a denied insurance claim"). Dialogue above is the <em>envisioned</em> version with the flywheel in place.</div>
+          <div id="refList" style="display:flex; flex-direction:column; gap:10px;">
+            <div class="ref-loading" style="color:var(--text2); font-size:0.85em;">Loading candidates…</div>
+          </div>
         </div>
       </div>
     </div>
@@ -802,6 +814,32 @@ function toggleRoadmapPanel(btn){
   if(!panel) return;
   const isOpen = panel.classList.toggle('open');
   btn.classList.toggle('open', isOpen);
+  if(isOpen && panel.id === 'referralExamples') loadReferralList();
+}
+
+let referralListLoaded = false;
+function loadReferralList(){
+  if(referralListLoaded) return;
+  referralListLoaded = true;
+  fetch('assets/referral-candidates.json').then(r => r.json()).then(data => {
+    const el = document.getElementById('refList');
+    el.innerHTML = data.map(c => {
+      const verdictClass = c.verdict === 'clear_fit' ? 'clear' : 'potential';
+      const verdictLabel = c.verdict === 'clear_fit' ? 'Clear fit' : 'Potential fit';
+      return `<div class="ref-row ${verdictClass}">
+        <div class="ref-head">
+          <span class="ref-badge ${verdictClass}">${verdictLabel}</span>
+          <span class="ref-convid">conv ${c.id}</span>
+          <span class="ref-date">${c.date}</span>
+          <span class="ref-subtype">${c.subtype.replace(/_/g,' ')}</span>
+        </div>
+        <div class="ref-report">${(c.report || '').replace(/</g,'&lt;')}</div>
+        ${c.why ? `<div class="ref-why">Judge: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
+      </div>`;
+    }).join('');
+  }).catch(err => {
+    document.getElementById('refList').innerHTML = `<div style="color:#C12B14">Failed to load: ${err.message}</div>`;
+  });
 }
 
 Chart.register(ChartDataLabels);
