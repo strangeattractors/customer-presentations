@@ -32,14 +32,16 @@
   .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(224,122,95,0.25) 0%, transparent 70%); }
   .hero::after { content:''; position:absolute; bottom:-150px; left:-100px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(224,122,95,0.15) 0%, transparent 70%); }
   .hero > * { position:relative; z-index:1; }
-  .hero .logos-row { display:flex; align-items:center; gap:36px; margin-bottom:72px; }
-  .hero .logos-row img { background:white; padding:12px 18px; border-radius:10px; }
-  .hero .logos-row .cross { color:rgba(255,255,255,0.5); font-size:1.4em; }
-  .hero h1 { color:white; font-size:3.4em; font-weight:700; margin-bottom:24px; max-width:760px; }
-  .hero .subtitle { font-size:1.2em; color:rgba(255,255,255,0.75); margin-bottom:16px; font-weight:400; }
-  .hero .meta { margin-top:80px; display:flex; gap:64px; align-items:center; }
-  .hero .meta-block .label { font-size:0.7em; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:6px; }
-  .hero .meta-block .value { font-family:'Lora',serif; font-size:1.4em; color:white; }
+  .hero.hero-firm { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:72px 72px; min-height:720px; }
+  .hero-eyebrow { font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.55); font-weight:600; margin-bottom:auto; align-self:stretch; padding-top:0; }
+  .hero-firm-stage { display:flex; flex-direction:column; align-items:center; gap:36px; margin:auto 0; }
+  .hero-firm-logo { width:min(640px, 80%); height:auto; background:white; padding:28px 40px; border-radius:14px; box-shadow:0 20px 48px rgba(0,0,0,0.35); }
+  .hero-firm-name { font-family:'Lora',serif; font-size:3.4rem; font-weight:700; line-height:1.05; color:#fff; letter-spacing:-0.01em; }
+  .hero-firm-name .subtler { font-weight:500; color:rgba(255,255,255,0.75); letter-spacing:0.01em; }
+  .hero-tagline { font-family:'Lora',serif; font-style:italic; font-size:1.35rem; color:rgba(255,255,255,0.82); margin:40px 0 auto; max-width:700px; line-height:1.4; }
+  .hero-partner { display:inline-flex; align-items:center; gap:14px; padding:14px 22px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:40px; backdrop-filter:blur(4px); }
+  .hero-partner-label { font-size:0.82rem; color:rgba(255,255,255,0.65); font-weight:500; letter-spacing:0.02em; }
+  .hero-y2-mark { height:22px; width:auto; filter:brightness(0) invert(1); opacity:0.95; }
 
   /* Big stat */
   .big-stat { text-align:center; padding:40px 0; }
@@ -231,27 +233,19 @@
 <div class="leads-tooltip" id="leadsTooltip"></div>
 
 <!-- ============== 1. HERO ============== -->
-<div class="hero">
-  <div class="logos-row">
-    <img src="assets/ichq-logo.svg" alt="Insurance Claim HQ / Hair Shunnarah" height="44" style="height:44px;">
-    <span class="cross">×</span>
-    <img src="assets/logo_yousquared.png" alt="YouSquared" height="44" style="height:44px;">
+<div class="hero hero-firm">
+  <div class="hero-eyebrow">Q1 2026 Business Review · For Galen Hair · April 20, 2026</div>
+
+  <div class="hero-firm-stage">
+    <img src="assets/ichq-logo.svg" alt="Hair Shunnarah Trial Attorneys / Insurance Claim HQ" class="hero-firm-logo">
+    <div class="hero-firm-name">Hair Shunnarah<br><span class="subtler">Trial Attorneys</span></div>
   </div>
-  <div class="subtitle">Partnered since December 2024 · Q1 2026 Business Review</div>
-  <h1>Every claimant heard. Every call answered instantly.</h1>
-  <div class="meta">
-    <div class="meta-block">
-      <div class="label">For</div>
-      <div class="value">Galen Hair</div>
-    </div>
-    <div class="meta-block">
-      <div class="label">Date</div>
-      <div class="value">April 20, 2026</div>
-    </div>
-    <div class="meta-block">
-      <div class="label">Partnership live since</div>
-      <div class="value">December 2024</div>
-    </div>
+
+  <div class="hero-tagline">"Every claimant heard. Every call answered instantly."</div>
+
+  <div class="hero-partner">
+    <span class="hero-partner-label">Partnered since December 2024 with</span>
+    <img src="assets/logo_yousquared.png" alt="YouSquared" class="hero-y2-mark">
   </div>
 </div>
 
