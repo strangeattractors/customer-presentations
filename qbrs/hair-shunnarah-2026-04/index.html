@@ -123,7 +123,29 @@
 
   /* Stats dashboard */
   .metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
-  .metric-card { background:var(--bg2); border-radius:12px; padding:18px 20px; border-left:3px solid var(--accent); }
+  .metric-card { background:var(--bg2); border-radius:12px; padding:18px 20px; border-left:3px solid var(--accent); position:relative; }
+  .metric-card.leads-card { cursor:help; transition:transform 0.15s, box-shadow 0.15s; outline:none; }
+  .metric-card.leads-card:hover, .metric-card.leads-card:focus { transform:translateY(-1px); box-shadow:0 6px 18px rgba(45,42,38,0.08); border-left-color:var(--accent-deep); }
+  .hover-hint { display:inline-block; font-size:0.6rem; letter-spacing:0.1em; color:var(--accent); font-weight:600; margin-left:4px; }
+  /* Leads tooltip — adapted from clone-backend all-access dashboard */
+  .leads-tooltip { position:fixed; z-index:9999; background:#1e293b; color:#e2e8f0; border-radius:12px; padding:14px 16px; font-size:0.78rem; line-height:1.5; max-width:540px; width:520px; max-height:70vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,0.35); pointer-events:none; opacity:0; transition:opacity 0.15s; scrollbar-width:thin; scrollbar-color:#475569 transparent; font-family:'Inter', sans-serif; }
+  .leads-tooltip.visible { opacity:1; pointer-events:auto; }
+  .leads-tooltip.pinned { box-shadow:0 16px 48px rgba(0,0,0,0.5); border:1px solid #334155; }
+  .lt-head { font-weight:700; font-size:0.88rem; color:#fff; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #334155; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .lt-pin-hint { font-size:0.64rem; font-weight:500; color:#64748b; letter-spacing:0.05em; }
+  .leads-tooltip.pinned .lt-pin-hint { display:none; }
+  .lt-close { display:none; cursor:pointer; font-size:0.8rem; color:#94a3b8; padding:2px 8px; border:1px solid #334155; border-radius:4px; background:transparent; }
+  .lt-close:hover { color:#fff; background:#334155; }
+  .leads-tooltip.visible .lt-close { display:inline; }
+  .leads-tooltip ul { list-style:none; padding:0; margin:0; }
+  .leads-tooltip li { padding:7px 0; border-bottom:1px solid rgba(71,85,105,0.35); color:#cbd5e1; display:grid; grid-template-columns:54px 52px 1fr; gap:8px; align-items:baseline; }
+  .leads-tooltip li:last-child { border-bottom:none; }
+  .lt-fee { font-family:'Lora', serif; font-weight:700; color:#10b981; font-size:0.76rem; }
+  .lt-fee.urgent { color:#fb923c; }
+  .lt-when { color:#64748b; font-size:0.7rem; }
+  .lt-topic { color:#e2e8f0; font-size:0.75rem; line-height:1.45; }
+  .leads-tooltip::-webkit-scrollbar { width:6px; }
+  .leads-tooltip::-webkit-scrollbar-thumb { background:#475569; border-radius:3px; }
   .metric-label { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); font-weight:600; margin-bottom:6px; }
   .metric-value { font-family:'Lora',serif; font-size:2.2rem; font-weight:700; color:var(--text); line-height:1; }
   .metric-sub { margin-top:6px; font-size:0.78rem; color:var(--text2); line-height:1.4; }
@@ -169,6 +191,8 @@
 
 <div class="confidential-stripe">Confidential — Hair Shunnarah × YouSquared Partnership — Not for redistribution</div>
 
+<div class="leads-tooltip" id="leadsTooltip"></div>
+
 <!-- ============== 1. HERO ============== -->
 <div class="hero">
   <div class="logos-row">
@@ -200,10 +224,10 @@
   <h2>Hank's first 10 months at Hair Shunnarah.</h2>
 
   <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-label">New leads captured</div>
-      <div class="metric-value">308</div>
-      <div class="metric-sub">95% off-hours · unreachable without Hank</div>
+    <div class="metric-card leads-card" id="leadsCard" tabindex="0">
+      <div class="metric-label">New leads captured <span class="hover-hint">hover →</span></div>
+      <div class="metric-value">309</div>
+      <div class="metric-sub">95% off-hours · <strong style="color:var(--accent-deep);">~$1.71M</strong> est. contingency-fee value</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Calls handled</div>
@@ -231,7 +255,7 @@
     <div>
       <div class="panel-label">Estimated contingency-fee value captured</div>
       <div style="height:240px;"><canvas id="valueChart"></canvas></div>
-      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$8.0M</strong> potential · <strong style="color:var(--accent-deep);">~$2.0M</strong> conversion-adjusted <span style="color:var(--text3);">(33% × $80K avg PI settlement × 25% inbound conversion)</span></div>
+      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$1.71M</strong> across 309 leads <span style="color:var(--text3);">(banded per-call: $2.5K routine → $25K urgent ≥ 8 min; hover "new leads captured" for the full list)</span></div>
     </div>
   </div>
 
@@ -275,11 +299,11 @@
 
   <div class="fact-grid" style="margin-top:32px; grid-template-columns:1fr 1fr 1fr; gap:14px;">
     <div class="fact-card" style="padding:18px 20px;">
-      <div class="fact-num" style="font-size:1.7em;">308</div>
+      <div class="fact-num" style="font-size:1.7em;">309</div>
       <div class="fact-label" style="font-size:0.88em;">New client leads Hank has captured.</div>
     </div>
     <div class="fact-card" style="padding:18px 20px;">
-      <div class="fact-num" style="font-size:1.7em;">292</div>
+      <div class="fact-num" style="font-size:1.7em;">293</div>
       <div class="fact-label" style="font-size:0.88em;">Of those, arrived <strong>off-hours</strong> — unreachable without Hank.</div>
     </div>
     <div class="fact-card" style="padding:18px 20px;">
@@ -640,33 +664,117 @@ const bizHoursBand = {
   }
 };
 
-/* ============ SLIDE 2 — $ VALUE + MINI VOLUME ============ */
+/* ============ SLIDE 2 — LEADS DATA + $ VALUE + MINI VOLUME ============ */
 const monthLabels = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr*'];
-const monthlyNewLeads = [17,38,46,20,33,54,30,19,16,23,10];
-const AVG_FEE = 26000; // 33% × $80k avg PI settlement
-const CONV = 0.25;
-const monthlyPotential = monthlyNewLeads.map(n => Math.round(n * AVG_FEE / 1000)); // K
-const monthlyAdjusted  = monthlyNewLeads.map(n => Math.round(n * AVG_FEE * CONV / 1000)); // K
 
-new Chart(document.getElementById('valueChart').getContext('2d'), {
-  type:'bar',
-  data:{
-    labels:monthLabels,
-    datasets:[
-      { label:'Potential ($K)',   data:monthlyPotential, backgroundColor:'rgba(224,122,95,0.25)', borderColor:'#E07A5F', borderWidth:1, borderRadius:3, stack:'$' },
-      { label:'Conv-adjusted ($K)', data:monthlyAdjusted,  backgroundColor:'#E07A5F', borderRadius:3, stack:'conv' }
-    ]
-  },
-  plugins:[ChartDataLabels],
-  options:{
-    responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
-    plugins:{ legend:{display:false}, datalabels:{display:false}, tooltip:{backgroundColor:'#2D2A26',callbacks:{label:function(ctx){return ctx.dataset.label+': $'+ctx.parsed.y+'K';}}} },
-    scales:{
-      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
-      y:{beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}, callback:function(v){return '$'+v+'K';}}}
+// Load the full 309-lead backing (fetched from same-directory JSON)
+let LEADS = [];
+let monthlyFeeK = [0,0,0,0,0,0,0,0,0,0,0]; // $K per month, Jun..Apr
+
+function aggregateMonthly(){
+  const monthIdx = { '2025-06':0,'2025-07':1,'2025-08':2,'2025-09':3,'2025-10':4,'2025-11':5,'2025-12':6,
+                     '2026-01':7,'2026-02':8,'2026-03':9,'2026-04':10 };
+  monthlyFeeK = [0,0,0,0,0,0,0,0,0,0,0];
+  LEADS.forEach(L => {
+    const idx = monthIdx[L.date.slice(0,7)];
+    if(idx !== undefined) monthlyFeeK[idx] += L.fee/1000;
+  });
+  monthlyFeeK = monthlyFeeK.map(v => Math.round(v));
+}
+
+let valueChart;
+function buildValueChart(){
+  if(valueChart) valueChart.destroy();
+  valueChart = new Chart(document.getElementById('valueChart').getContext('2d'), {
+    type:'bar',
+    data:{
+      labels:monthLabels,
+      datasets:[{ label:'Est. fee ($K)', data:monthlyFeeK, backgroundColor:'#E07A5F', borderRadius:4 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, datalabels:{display:false}, tooltip:{backgroundColor:'#2D2A26', callbacks:{label:function(ctx){return '$'+ctx.parsed.y+'K est. fee';}}} },
+      scales:{
+        x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
+        y:{beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}, callback:function(v){return '$'+v+'K';}}}
+      }
     }
-  }
-});
+  });
+}
+
+fetch('assets/leads-backing.json')
+  .then(r => r.json())
+  .then(data => { LEADS = data; aggregateMonthly(); buildValueChart(); })
+  .catch(err => { console.error('leads load failed', err); buildValueChart(); });
+
+/* ============ LEADS HOVER TOOLTIP — slide 2 ============ */
+const leadsCard = document.getElementById('leadsCard');
+const leadsTooltip = document.getElementById('leadsTooltip');
+let leadsPinned = false;
+let leadsRendered = false;
+
+function renderLeadsTooltip(){
+  if(leadsRendered) return;
+  const totalFee = LEADS.reduce((s,L)=>s+L.fee,0);
+  const fmt = n => '$' + (n/1000).toFixed(n>=10000 ? 0 : 1) + 'K';
+  const rows = LEADS.map(L => `
+    <li>
+      <span class="lt-fee ${L.urgent?'urgent':''}">${fmt(L.fee)}</span>
+      <span class="lt-when">${L.dow} ${L.date.slice(5)}<br>${L.time}</span>
+      <span class="lt-topic">${L.topic.replace(/</g,'&lt;')}</span>
+    </li>`).join('');
+  leadsTooltip.innerHTML = `
+    <div class="lt-head">
+      <span>${LEADS.length} leads · ~$${(totalFee/1e6).toFixed(2)}M est. fee</span>
+      <span class="lt-pin-hint">click to pin</span>
+      <button class="lt-close" onclick="closeLeadsTooltip()">✕ close</button>
+    </div>
+    <ul>${rows}</ul>`;
+  leadsRendered = true;
+}
+
+function positionLeadsTooltip(){
+  const r = leadsCard.getBoundingClientRect();
+  const tw = leadsTooltip.offsetWidth || 520;
+  const th = leadsTooltip.offsetHeight;
+  let x = r.left + r.width/2 - tw/2;
+  x = Math.max(16, Math.min(x, window.innerWidth - tw - 16));
+  let y = r.bottom + 10;
+  if(y + th > window.innerHeight - 16) y = Math.max(16, r.top - th - 10);
+  leadsTooltip.style.left = x + 'px';
+  leadsTooltip.style.top = y + 'px';
+}
+
+function showLeadsTooltip(){
+  if(!LEADS.length) return;
+  renderLeadsTooltip();
+  leadsTooltip.classList.add('visible');
+  positionLeadsTooltip();
+}
+function hideLeadsTooltip(){
+  if(leadsPinned) return;
+  leadsTooltip.classList.remove('visible');
+}
+function closeLeadsTooltip(){
+  leadsPinned = false;
+  leadsTooltip.classList.remove('visible','pinned');
+}
+
+if(leadsCard){
+  leadsCard.addEventListener('mouseenter', showLeadsTooltip);
+  leadsCard.addEventListener('focus', showLeadsTooltip);
+  leadsCard.addEventListener('mouseleave', hideLeadsTooltip);
+  leadsCard.addEventListener('click', () => {
+    leadsPinned = !leadsPinned;
+    if(leadsPinned){ showLeadsTooltip(); leadsTooltip.classList.add('pinned'); }
+    else { leadsTooltip.classList.remove('pinned'); hideLeadsTooltip(); }
+  });
+  // Don't close when hovering tooltip itself
+  leadsTooltip.addEventListener('mouseenter', () => leadsTooltip.classList.add('visible'));
+  leadsTooltip.addEventListener('mouseleave', hideLeadsTooltip);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLeadsTooltip(); });
+  window.addEventListener('resize', () => { if(leadsTooltip.classList.contains('visible')) positionLeadsTooltip(); });
+}
 
 // Mini volume chart — same Jun-Apr monthly data as slide 4
 const mvUrgent    = [45,17,13, 5,11, 9, 8,15,13,10, 4];
