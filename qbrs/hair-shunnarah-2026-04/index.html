@@ -273,7 +273,7 @@
     <div class="metric-card leads-card" id="leadsCard" tabindex="0">
       <div class="metric-label">New leads captured <span class="hover-hint">hover →</span></div>
       <div class="metric-value">36</div>
-      <div class="metric-sub">81% off-hours · <strong style="color:var(--accent-deep);">~$949K</strong> est. fee value (prod classifier)</div>
+      <div class="metric-sub">81% off-hours · <strong style="color:var(--accent-deep);">~$949K</strong> estimated fee value</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Calls handled</div>
@@ -296,12 +296,12 @@
     <div>
       <div class="panel-label">Call volume per month</div>
       <div style="height:240px;"><canvas id="miniVolumeChart"></canvas></div>
-      <div class="panel-sub">Peaks track Gulf Coast storm season · <strong style="color:var(--accent-deep);">36</strong> classified leads captured</div>
+      <div class="panel-sub">Peaks track Gulf Coast storm season · <strong style="color:var(--accent-deep);">36</strong> qualified leads captured</div>
     </div>
     <div>
       <div class="panel-label">Estimated fee value captured</div>
       <div style="height:240px;"><canvas id="valueChart"></canvas></div>
-      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$949K</strong> across 36 classified leads <span style="color:var(--text3);">(prod <code>sales_leads</code> classifier — Gemini 2.5 Flash over short_report; hover the leads card for the full list)</span></div>
+      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$949K</strong> across 36 qualified leads <span style="color:var(--text3);">— hover the leads card for the full list</span></div>
     </div>
   </div>
 
@@ -309,7 +309,7 @@
     <div class="chart-callout"><div class="when">Mar 10 · 2025</div><div class="what">Shannon onboards — Hank goes live on HSTA's main intake line</div></div>
     <div class="chart-callout"><div class="when">Oct – Nov · 2025</div><div class="what">Hurricane season peak · 330 calls handled</div></div>
     <div class="chart-callout"><div class="when">Feb 4 · 2026</div><div class="what">LeadDocket integration goes live</div></div>
-    <div class="chart-callout"><div class="when">Today</div><div class="what">1,063 Hank calls · 36 classified leads captured</div></div>
+    <div class="chart-callout"><div class="when">Today</div><div class="what">1,063 Hank calls · 36 qualified leads captured</div></div>
   </div>
   <div class="page-num">02</div>
 </div>
@@ -449,7 +449,7 @@
   <div class="eyebrow">Hank is ready for prime time</div>
   <h2>Imagine Hank first in line on <em>every</em> call.</h2>
   <p class="lead" style="max-width:760px;">
-    Today Hank catches the calls your team can't. <strong>1,015 of the last 1,063 calls (95%)</strong> came when no HSTA staff was at the desk — including 36 classified new-client leads worth ~$949K. The chart below shows the 24-hour shape of that traffic. Tomorrow Hank is the voice answering <em>every</em> first ring — qualifying, closing, or handing off to the right intake specialist or attorney.
+    Today Hank catches the calls your team can't. <strong>1,015 of the last 1,063 calls (95%)</strong> came when no HSTA staff was at the desk — including 36 qualified new-client leads worth ~$949K. The chart below shows the 24-hour shape of that traffic. Tomorrow Hank is the voice answering <em>every</em> first ring — qualifying, closing, or handing off to the right intake specialist or attorney.
   </p>
 
   <div style="display:flex; gap:18px; align-items:center; margin-top:28px; margin-bottom:10px;">
@@ -480,7 +480,7 @@
     </div>
     <div class="fact-card" style="padding:18px 20px;">
       <div class="fact-num" style="font-size:1.7em;">36</div>
-      <div class="fact-label" style="font-size:0.88em;">Classified as <strong>new-client leads</strong> · <strong style="color:var(--accent-deep);">$949K</strong> est. fee value (prod classifier).</div>
+      <div class="fact-label" style="font-size:0.88em;">Qualified <strong>new-client leads</strong> · <strong style="color:var(--accent-deep);">$949K</strong> estimated fee value.</div>
     </div>
     <div class="fact-card" style="padding:18px 20px;">
       <div class="fact-num" style="font-size:1.7em;">29<span style="font-size:0.55em; color:var(--text2); font-weight:500;"> / 36</span></div>
@@ -734,26 +734,24 @@
           Hank facilitates contractor &amp; adjuster referrals.
           <div class="sub">When contractor/adjuster customers' callers mention insurance disputes, Hank brokers the intro to HSTA.</div>
           <div class="rm-chips">
-            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example calls (40)</button>
+            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example calls</button>
           </div>
         </div>
         <div class="roadmap-impact">
-          <strong style="color:var(--accent-deep);">~$276K–$367K / yr</strong> in HSTA lead value — backed by a Gemini scan of 25,640 substantive calls across 501 Y² contractor / adjuster / roofer / restoration users (Jun '25 → Apr '26).
+          Every contractor, adjuster or roofer on YouSquared sends HSTA <strong style="color:var(--accent-deep);">~3 potential client leads a year</strong> — and there are hundreds more to onboard.
           <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
         </div>
       </div>
       <div class="roadmap-nitty">
         <ul>
-          <li><strong>~1.6 clear-fit + 2.4 potential-fit referrals / mo</strong> concentrated in just 15 active Y² users (11 adjusters, 3 roofers, 1 home-repair)</li>
-          <li>Adjusters drive clear-fit (explicit denial / dispute); roofers drive potential-fit (active claim that may turn)</li>
-          <li>Targeted outreach: onboard more roofers &amp; public adjusters onto Y² to widen the funnel</li>
-          <li>Deploy the Gemini referral-detection judge as a post-call hook (same pattern as <code>sales_leads</code>)</li>
-          <li>Agree the hand-off script &amp; which HSTA intake line receives the bridged call</li>
-          <li>Assumes 50% conversion of clear-fit + 15% conversion of potential-fit at $26.6K avg HSTA fee</li>
+          <li>Adjusters drive clear fits (caller is already disputing their insurer); roofers drive potential fits (caller has an active claim that may turn)</li>
+          <li>Targeted outreach: onboard more roofers and public adjusters onto YouSquared to widen the funnel</li>
+          <li>Add an automatic referral-detection hook to Hank so every qualifying call is flagged and queued for hand-off</li>
+          <li>Agree the hand-off script and which HSTA intake line receives the bridged call</li>
         </ul>
       </div>
       <div class="roadmap-example" id="referralExamples">
-        <div class="ct-header"><span>40 real prod calls · 16 clear fits + 24 potential fits · anonymized short_reports</span></div>
+        <div class="ct-header"><span>Real calls from the past 10 months · 16 clear fits + 24 potential fits · anonymized</span></div>
         <div class="ct-body">
           <div id="refList" style="display:flex; flex-direction:column; gap:10px;">
             <div class="ref-loading" style="color:var(--text2); font-size:0.85em;">Loading candidates…</div>
@@ -834,7 +832,7 @@ function loadReferralList(){
           <span class="ref-subtype">${c.subtype.replace(/_/g,' ')}</span>
         </div>
         <div class="ref-report">${(c.report || '').replace(/</g,'&lt;')}</div>
-        ${c.why ? `<div class="ref-why">Judge: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
+        ${c.why ? `<div class="ref-why">Why: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
       </div>`;
     }).join('');
   }).catch(err => {
@@ -929,7 +927,7 @@ function renderLeadsTooltip(){
   const totalStr = totalFee >= 1e6 ? '~$' + (totalFee/1e6).toFixed(2) + 'M' : '~$' + Math.round(totalFee/1000) + 'K';
   leadsTooltip.innerHTML = `
     <div class="lt-head">
-      <span>${LEADS.length} leads · ${totalStr} est. fee · prod classifier</span>
+      <span>${LEADS.length} qualified leads · ${totalStr} estimated fee</span>
       <span class="lt-pin-hint">click to pin</span>
       <button class="lt-close" onclick="closeLeadsTooltip()">✕ close</button>
     </div>
