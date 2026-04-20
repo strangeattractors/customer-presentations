@@ -140,8 +140,8 @@
   .leads-tooltip ul { list-style:none; padding:0; margin:0; }
   .leads-tooltip li { padding:7px 0; border-bottom:1px solid rgba(71,85,105,0.35); color:#cbd5e1; display:grid; grid-template-columns:54px 52px 1fr; gap:8px; align-items:baseline; }
   .leads-tooltip li:last-child { border-bottom:none; }
-  .lt-fee { font-family:'Lora', serif; font-weight:700; color:#10b981; font-size:0.76rem; }
-  .lt-fee.urgent { color:#fb923c; }
+  .lt-fee { font-family:'Lora', serif; font-weight:700; color:#fb923c; font-size:0.78rem; }
+  .lt-fee.existing { color:#94a3b8; }
   .lt-when { color:#64748b; font-size:0.7rem; }
   .lt-topic { color:#e2e8f0; font-size:0.75rem; line-height:1.45; }
   .leads-tooltip::-webkit-scrollbar { width:6px; }
@@ -226,8 +226,8 @@
   <div class="metrics-grid">
     <div class="metric-card leads-card" id="leadsCard" tabindex="0">
       <div class="metric-label">New leads captured <span class="hover-hint">hover →</span></div>
-      <div class="metric-value">309</div>
-      <div class="metric-sub">95% off-hours · <strong style="color:var(--accent-deep);">~$1.71M</strong> est. contingency-fee value</div>
+      <div class="metric-value">36</div>
+      <div class="metric-sub">81% off-hours · <strong style="color:var(--accent-deep);">~$949K</strong> est. fee value (prod classifier)</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Calls handled</div>
@@ -253,9 +253,9 @@
       <div class="panel-sub">Peaks track Gulf Coast storm season · <strong style="color:var(--accent-deep);">488</strong> substantive intakes</div>
     </div>
     <div>
-      <div class="panel-label">Estimated contingency-fee value captured</div>
+      <div class="panel-label">Estimated fee value captured</div>
       <div style="height:240px;"><canvas id="valueChart"></canvas></div>
-      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$1.71M</strong> across 309 leads <span style="color:var(--text3);">(banded per-call: $2.5K routine → $25K urgent ≥ 8 min; hover "new leads captured" for the full list)</span></div>
+      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$949K</strong> across 36 classified leads <span style="color:var(--text3);">(prod <code>sales_leads</code> classifier — Gemini 2.5 Flash over short_report; hover the leads card for the full list)</span></div>
     </div>
   </div>
 
@@ -271,9 +271,9 @@
 <!-- ============== 3. KPI + 24-HOUR HISTOGRAM ============== -->
 <div class="page alt">
   <div class="eyebrow">KPI &amp; Where We Are Today</div>
-  <h2>95% of new-client leads arrive off-hours.</h2>
+  <h2>95% of Hank's calls arrive outside ICHQ business hours.</h2>
   <p class="lead" style="max-width:760px;">
-    KPI = <strong>revenue uplift from callers Hank recovers</strong> — clients who'd otherwise have bounced to a competitor or given up. Measured as qualified intakes captured outside business hours × avg PI case value.
+    KPI = <strong>revenue uplift from callers Hank recovers</strong> — clients who'd otherwise have bounced or given up. Of the 1,063 calls Hank answered since Jun 16, 2025, <strong>1,015 came when no ICHQ staff was at the desk</strong>. Of those, <strong>36 were classified as new-client leads</strong> by our prod <code>sales_leads</code> Gemini classifier, with <strong>$949K in estimated fee value</strong>.
   </p>
 
   <div style="display:flex; gap:18px; align-items:center; margin-top:28px; margin-bottom:10px;">
@@ -299,16 +299,16 @@
 
   <div class="fact-grid" style="margin-top:32px; grid-template-columns:1fr 1fr 1fr; gap:14px;">
     <div class="fact-card" style="padding:18px 20px;">
-      <div class="fact-num" style="font-size:1.7em;">309</div>
-      <div class="fact-label" style="font-size:0.88em;">New client leads Hank has captured.</div>
+      <div class="fact-num" style="font-size:1.7em;">1,063</div>
+      <div class="fact-label" style="font-size:0.88em;">Total Hank calls since Jun 16, 2025.</div>
     </div>
     <div class="fact-card" style="padding:18px 20px;">
-      <div class="fact-num" style="font-size:1.7em;">293</div>
-      <div class="fact-label" style="font-size:0.88em;">Of those, arrived <strong>off-hours</strong> — unreachable without Hank.</div>
+      <div class="fact-num" style="font-size:1.7em;">36</div>
+      <div class="fact-label" style="font-size:0.88em;">Classified as <strong>new-client leads</strong> · <strong style="color:var(--accent-deep);">$949K</strong> est. fee value (prod classifier).</div>
     </div>
     <div class="fact-card" style="padding:18px 20px;">
-      <div class="fact-num" style="font-size:1.7em;">7<span style="font-size:0.6em; color:var(--text2); font-weight:500;">am &amp;</span> 8<span style="font-size:0.6em; color:var(--text2); font-weight:500;">pm</span></div>
-      <div class="fact-label" style="font-size:0.88em;">Peak call windows — right before open &amp; right after close.</div>
+      <div class="fact-num" style="font-size:1.7em;">29<span style="font-size:0.55em; color:var(--text2); font-weight:500;"> / 36</span></div>
+      <div class="fact-label" style="font-size:0.88em;">Leads arriving <strong>off-hours</strong> (81%) — unreachable without Hank.</div>
     </div>
   </div>
   <div class="page-num">03</div>
@@ -716,16 +716,20 @@ let leadsRendered = false;
 function renderLeadsTooltip(){
   if(leadsRendered) return;
   const totalFee = LEADS.reduce((s,L)=>s+L.fee,0);
-  const fmt = n => '$' + (n/1000).toFixed(n>=10000 ? 0 : 1) + 'K';
-  const rows = LEADS.map(L => `
+  const fmt = n => n >= 1000 ? '$' + (n/1000).toFixed(n>=10000 ? 0 : 1) + 'K' : '$' + n;
+  const rows = LEADS.map(L => {
+    const typeLabel = (L.lead_type || '').replace(/_/g,' ');
+    return `
     <li>
-      <span class="lt-fee ${L.urgent?'urgent':''}">${fmt(L.fee)}</span>
+      <span class="lt-fee ${L.category==='new_lead'?'':'existing'}">${fmt(L.fee)}</span>
       <span class="lt-when">${L.dow} ${L.date.slice(5)}<br>${L.time}</span>
-      <span class="lt-topic">${L.topic.replace(/</g,'&lt;')}</span>
-    </li>`).join('');
+      <span class="lt-topic"><strong style="color:#fff;">${typeLabel}</strong> · ${L.topic.replace(/</g,'&lt;')}</span>
+    </li>`;
+  }).join('');
+  const totalStr = totalFee >= 1e6 ? '~$' + (totalFee/1e6).toFixed(2) + 'M' : '~$' + Math.round(totalFee/1000) + 'K';
   leadsTooltip.innerHTML = `
     <div class="lt-head">
-      <span>${LEADS.length} leads · ~$${(totalFee/1e6).toFixed(2)}M est. fee</span>
+      <span>${LEADS.length} leads · ${totalStr} est. fee · prod classifier</span>
       <span class="lt-pin-hint">click to pin</span>
       <button class="lt-close" onclick="closeLeadsTooltip()">✕ close</button>
     </div>
