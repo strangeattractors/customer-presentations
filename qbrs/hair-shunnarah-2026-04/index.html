@@ -852,26 +852,41 @@ const refTabSrc = {
 };
 
 function renderRefRow(c, tab){
-  const verdict = c.verdict || (tab === 'asta' ? 'asta' : tab === 'tcpa' ? 'tcpa' : 'clear_fit');
+  // Normalize fields across the three shapes
+  const id = c.id || c.conv_id;
+  const phone = c.phone || c.phone_masked;
+  const report = c.report || c.short_report || c.sample_short_report || '';
+  const subtype = c.subtype || c.user_subtype || c.user_industry
+                 || (Array.isArray(c.industries_hit) ? c.industries_hit.slice(0,3).join(' · ') : '')
+                 || (Array.isArray(c.industries) ? c.industries.join(', ') : '');
+  const verdict = c.verdict || (tab === 'asta' ? 'asta_fit' : tab === 'tcpa' ? 'tcpa' : 'clear_fit');
   const cls = verdict === 'clear_fit' ? 'clear' : (verdict === 'potential_fit' ? 'potential' : verdict);
   const label = {
     clear_fit:'Clear fit', potential_fit:'Potential fit',
     asta_fit:'ASTA fit', maybe:'Possible ASTA',
     tcpa:'TCPA candidate',
   }[verdict] || verdict;
-  const extra = tab === 'tcpa' && c.call_count
-    ? `<span class="ref-date">${c.call_count} calls · ${c.first_call || ''} → ${c.last_call || ''}</span>` : '';
-  const convInfo = c.id ? `<span class="ref-convid">conv ${c.id}</span>` : (c.phone ? `<span class="ref-convid">${c.phone}</span>` : '');
-  const subtype = c.subtype || c.user_subtype || (Array.isArray(c.industries) ? c.industries.join(', ') : '');
+
+  let extra = '';
+  if(tab === 'tcpa' && c.call_count){
+    extra = `<span class="ref-date"><strong>${c.call_count}</strong> calls · ${c.distinct_users_hit || '?'} Y² users · ${c.first_call || ''} → ${c.last_call || ''}</span>`;
+  } else if(c.date){
+    extra = `<span class="ref-date">${c.date}</span>`;
+  }
+
+  const idInfo = id ? `<span class="ref-convid">conv ${id}</span>` : (phone ? `<span class="ref-convid">${phone}</span>` : '');
+  const stopEvidence = c.stop_request_evidence
+    ? `<div class="ref-why" style="color:var(--accent-deep); font-style:normal;">Told to stop ${c.first_stop_request_date ? 'on ' + c.first_stop_request_date : ''}: "${c.stop_request_evidence.replace(/</g,'&lt;')}"</div>` : '';
+
   return `<div class="ref-row ${cls}">
     <div class="ref-head">
       <span class="ref-badge ${cls}">${label}</span>
-      ${convInfo}
-      ${c.date ? `<span class="ref-date">${c.date}</span>` : ''}
+      ${idInfo}
       ${extra}
       ${subtype ? `<span class="ref-subtype">${String(subtype).replace(/_/g,' ')}</span>` : ''}
     </div>
-    <div class="ref-report">${(c.report || '').replace(/</g,'&lt;')}</div>
+    <div class="ref-report">${report.replace(/</g,'&lt;')}</div>
+    ${stopEvidence}
     ${c.why ? `<div class="ref-why">Why: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
   </div>`;
 }
