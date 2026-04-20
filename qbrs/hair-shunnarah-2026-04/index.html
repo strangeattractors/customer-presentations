@@ -103,6 +103,19 @@
   .roadmap-example .ct-header { padding:10px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; background:#FFFFFF; }
   .roadmap-example .ct-body { padding:14px 18px; }
   .roadmap-example .ct-turn { margin-bottom:8px; font-size:0.82rem; line-height:1.55; }
+
+  /* Call context — CRM/LeadDocket record preview shown before the transcript */
+  .call-context { background:#FFFFFF; border:1px solid #E6DFD9; border-left:3px solid var(--gold); border-radius:8px; padding:14px 16px 12px; margin-bottom:14px; font-size:0.78rem; line-height:1.5; }
+  .cc-title { font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:#A8793A; font-weight:700; margin-bottom:10px; }
+  .cc-grid { display:grid; grid-template-columns:130px 1fr; row-gap:3px; column-gap:10px; margin-bottom:8px; }
+  .cc-k { color:var(--text2); font-weight:600; }
+  .cc-v { color:var(--text); }
+  .cc-dim { color:var(--text3); font-size:0.92em; }
+  .cc-section-label { font-size:0.64rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); font-weight:700; margin:10px 0 6px; padding-top:8px; border-top:1px dashed #E6DFD9; }
+  .cc-notes { list-style:none; padding:0; margin:0; }
+  .cc-notes li { padding:4px 0; color:var(--text); }
+  .cc-notes .cc-date { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--text2); font-size:0.72rem; margin-right:4px; }
+  .cc-notes .cc-author { color:var(--accent-deep); font-weight:600; margin-right:4px; }
   .roadmap-nitty ul { margin:0; padding-left:18px; color:var(--text); font-size:0.85em; line-height:1.7; }
   .roadmap-nitty li { margin-bottom:4px; }
   .roadmap-num { font-family:'Lora',serif; font-size:2em; font-weight:700; color:var(--accent-deep); line-height:1; }
@@ -635,9 +648,32 @@
       <div class="roadmap-example">
         <div class="ct-header"><span>Envisioned call · LT (water damage) calling back for an update</span></div>
         <div class="ct-body">
-          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi LT, it's Hank at Hair Shunnarah — good to hear from you. I see Attorney GL is on your Allstate case. Calling for an update?</span></div>
+          <div class="call-context">
+            <div class="cc-title">LeadDocket record Hank pulls on caller ID match</div>
+            <div class="cc-grid">
+              <div class="cc-k">Contact</div><div class="cc-v">L. T.</div>
+              <div class="cc-k">Phone</div><div class="cc-v">+1 504 •••  •••• <span class="cc-dim">(matched on inbound)</span></div>
+              <div class="cc-k">Address</div><div class="cc-v">[redacted], Violet, LA 70092</div>
+              <div class="cc-k">Preferred language</div><div class="cc-v">English</div>
+            </div>
+            <div class="cc-section-label">Lead details</div>
+            <div class="cc-grid">
+              <div class="cc-k">Status</div><div class="cc-v">Open — Engineer's report under adjuster review</div>
+              <div class="cc-k">Summary</div><div class="cc-v">Homeowner's insurance dispute (Allstate) — water damage, home unlivable since 2025-05-31</div>
+              <div class="cc-k">Practice area</div><div class="cc-v">Property casualty / first-party insurance</div>
+              <div class="cc-k">Incident date</div><div class="cc-v">05/31/2025</div>
+              <div class="cc-k">Assigned staff</div><div class="cc-v">Attorney: Gretchen L. · Case mgr: Shannon R. · Intake: Paige C.</div>
+            </div>
+            <div class="cc-section-label">Recent notes</div>
+            <ul class="cc-notes">
+              <li><span class="cc-date">04/15/2026</span> <span class="cc-author">(Gretchen L.)</span> Adjuster acknowledged engineer's report; revised scope in progress.</li>
+              <li><span class="cc-date">03/22/2026</span> <span class="cc-author">(Shannon R.)</span> Client called for status; update pending adjuster response.</li>
+              <li><span class="cc-date">02/10/2026</span> <span class="cc-author">(Gretchen L.)</span> Filed supplemental claim with client's $1,100 engineer's report attached.</li>
+            </ul>
+          </div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi LT, it's Hank at Hair Shunnarah — good to hear from you. I see Attorney Gretchen is on your Allstate case. Calling for an update?</span></div>
           <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, I wanted to know if the engineer's report went through.</span></div>
-          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx"><strong>Let me connect you straight to GL — she has your file open and has been waiting to talk.</strong> One moment.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx"><strong>Good news — Gretchen just noted yesterday that the adjuster has acknowledged the report and is revising scope. Let me connect you straight to her.</strong> One moment.</span></div>
           <div class="ct-turn ai"><span class="sp">Attorney GL</span><span class="tx">LT? It's Gretchen. I do have an update — the adjuster has finally acknowledged the engineer's report. Let's walk through what that means for your claim…</span></div>
         </div>
       </div>
