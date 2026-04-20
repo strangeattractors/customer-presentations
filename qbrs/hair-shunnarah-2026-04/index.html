@@ -723,24 +723,29 @@
           </div>
         </div>
         <div class="roadmap-impact">
-          Bidirectional flywheel — we feed you client leads; you promote Y² into your contractor referral network.
+          <strong style="color:var(--accent-deep);">~$276K–$367K / yr</strong> in HSTA lead value — backed by a Gemini scan of 25,640 substantive calls across 501 Y² contractor / adjuster / roofer / restoration users (Jun '25 → Apr '26).
           <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
         </div>
       </div>
       <div class="roadmap-nitty">
         <ul>
-          <li>Co-design referral detection criteria with Y²'s contractor &amp; adjuster accounts (anonymized prod-call scan first)</li>
+          <li><strong>~1.6 clear-fit + 2.4 potential-fit referrals / mo</strong> concentrated in just 15 active Y² users (11 adjusters, 3 roofers, 1 home-repair)</li>
+          <li>Adjusters drive clear-fit (explicit denial / dispute); roofers drive potential-fit (active claim that may turn)</li>
+          <li>Targeted outreach: onboard more roofers &amp; public adjusters onto Y² to widen the funnel</li>
+          <li>Deploy the Gemini referral-detection judge as a post-call hook (same pattern as <code>sales_leads</code>)</li>
           <li>Agree the hand-off script &amp; which HSTA intake line receives the bridged call</li>
+          <li>Assumes 50% conversion of clear-fit + 15% conversion of potential-fit at $26.6K avg HSTA fee</li>
         </ul>
       </div>
       <div class="roadmap-example">
-        <div class="ct-header"><span>Envisioned call · homeowner calling their roofer (a Y² customer)</span></div>
+        <div class="ct-header"><span>Real call · conv 54733 · Jul 22 2025 · homeowner calling a Y² public adjuster</span></div>
         <div class="ct-body">
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Hey, I'm calling about the hail damage estimate. My State Farm guy is only offering $8K but your quote was $22K. What do I do?</span></div>
-          <div class="ct-turn ai"><span class="sp">Roofer's Hank</span><span class="tx">Thanks for reaching out. Before we talk repair, it sounds like your insurer may be underpaying. <strong>We work with Hair Shunnarah Trial Attorneys — they handle exactly these disputes, and there's no fee unless they win.</strong> Want me to connect you now?</span></div>
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, please.</span></div>
-          <div class="ct-turn ai"><span class="sp">Roofer's Hank</span><span class="tx">Bridging you to Hair Shunnarah's intake line. Stay with me.</span></div>
-          <div class="ct-turn ai"><span class="sp">Hank (HSTA)</span><span class="tx">Hi — this is Hank at Hair Shunnarah. Your roofer's team just sent you over. I've got hail + $8K offer vs $22K estimate. Let me get the details so we can push back on State Farm…</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Hi, this is FW. [Calling about a denied insurance claim; needs a public adjuster's help.]</span></div>
+          <div class="ct-turn ai"><span class="sp">Adjuster's Hank</span><span class="tx">Thanks for reaching out. Sounds like your carrier denied the claim — our [user] handles these, but this also sounds like something where <strong>Hair Shunnarah Trial Attorneys would fight the denial with no fee unless they win.</strong> Want me to connect you now, or arrange a call?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Arrange a call. Today, sometime today.</span></div>
+          <div class="ct-turn ai"><span class="sp">Adjuster's Hank</span><span class="tx">Got it. Bridging you to Hair Shunnarah's intake now — they can pick up today. Stay with me.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank (HSTA)</span><span class="tx">Hi FW — this is Hank at Hair Shunnarah. Your adjuster's team just sent you over, saying you've got a denial on your hands. Let me grab the carrier name and the denial letter details so we can push back today.</span></div>
+          <div style="margin-top:10px; padding:8px 12px; background:rgba(224,122,95,0.08); border-left:3px solid var(--accent); font-size:0.78em; color:var(--text2); border-radius:0 6px 6px 0;">Fact pattern is a real Y²-customer call (adjuster user, Jul 22 2025, "needs a public adjuster for a denied insurance claim"). Dialogue above is the <em>envisioned</em> version with the flywheel in place.</div>
         </div>
       </div>
     </div>
