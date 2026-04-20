@@ -91,6 +91,10 @@
   .rm-chip:hover { background:rgba(224,122,95,0.08); border-color:var(--accent); }
   .rm-chip.open { background:var(--accent); color:#fff; border-color:var(--accent); }
   .rm-chip.open::before { content:'▾ '; margin-right:2px; }
+  .roadmap-impact { position:relative; }
+  .rm-chevron { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:transparent; border:1px solid #E6DFD9; color:var(--text2); font-size:0.75rem; cursor:pointer; font-family:inherit; margin-left:8px; vertical-align:middle; transition:transform 0.25s, background 0.15s, color 0.15s, border-color 0.15s; padding:0; line-height:1; }
+  .rm-chevron:hover { background:rgba(224,122,95,0.1); color:var(--accent-deep); border-color:var(--accent); }
+  .rm-chevron.open { transform:rotate(180deg); background:var(--accent); color:#fff; border-color:var(--accent); }
   .roadmap-example, .roadmap-nitty { max-height:0; overflow:hidden; transition:max-height 0.4s ease, margin 0.3s ease, padding 0.3s ease; background:#F5F2EF; border-radius:10px; }
   .roadmap-example { margin:0 -8px; }
   .roadmap-nitty { margin:0 -8px; border-left:3px solid var(--gold); }
@@ -99,7 +103,6 @@
   .roadmap-example .ct-header { padding:10px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; background:#FFFFFF; }
   .roadmap-example .ct-body { padding:14px 18px; }
   .roadmap-example .ct-turn { margin-bottom:8px; font-size:0.82rem; line-height:1.55; }
-  .nitty-label { font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:#A8793A; font-weight:700; margin-bottom:8px; }
   .roadmap-nitty ul { margin:0; padding-left:18px; color:var(--text); font-size:0.85em; line-height:1.7; }
   .roadmap-nitty li { margin-bottom:4px; }
   .roadmap-num { font-family:'Lora',serif; font-size:2em; font-weight:700; color:var(--accent-deep); line-height:1; }
@@ -572,16 +575,22 @@
           <div class="sub">PI contract signed on the call; warm hand-off to your intake team.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
-            <button class="rm-chip" data-target="nitty"   onclick="toggleRoadmapPanel(this)">▸ nitty-gritty steps</button>
           </div>
         </div>
-        <div class="roadmap-impact">Signed contracts on the first call — no week-later follow-up, no lost momentum.</div>
+        <div class="roadmap-impact">
+          Signed contracts on the first call — no week-later follow-up, no lost momentum.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
       </div>
       <div class="roadmap-nitty">
-        <div class="nitty-label">Getting there</div>
         <ul>
-          <li>Confirm the PI representation agreement flows end-to-end (text-to-sign → LeadDocket opportunity)</li>
-          <li>Onboard each attorney to the web app (~5 min) so they see signed intakes as they land</li>
+          <li>Reinstate signing tool</li>
+          <li>Add PI contract to signing tool</li>
+          <li>Ensure Hank sends the correct contract in the correct situation</li>
+          <li>Create intake hunt group phone number (on RingCentral / equivalent)</li>
+          <li>Ensure that during working hours, Hank transfers qualified leads who aren't ready to sign up to the intake hunt group</li>
+          <li>Ensure Hank sends confirmation texts to qualified leads — so they commit, and so they have a trace of whose number represents them</li>
+          <li>Implement scheduled outbound text / call follow-ups for qualified leads that received a contract but haven't yet signed</li>
         </ul>
       </div>
       <div class="roadmap-example">
@@ -606,17 +615,21 @@
           <div class="sub">Recognizes the caller by phone, greets by name, routes to their case manager.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
-            <button class="rm-chip" data-target="nitty"   onclick="toggleRoadmapPanel(this)">▸ nitty-gritty steps</button>
           </div>
         </div>
-        <div class="roadmap-impact">Existing clients feel remembered. Case managers get the call they actually need to take.</div>
+        <div class="roadmap-impact">
+          Existing clients feel remembered. Case managers get the call they actually need to take.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
       </div>
       <div class="roadmap-nitty">
-        <div class="nitty-label">Getting there</div>
         <ul>
-          <li>Migrate ICHQ's login to use your intake number <strong>844-252-4684</strong></li>
-          <li>Add each attorney &amp; case manager as a team member on the web app</li>
-          <li>Collect staff direct phone numbers for case-manager routing</li>
+          <li>Sync Filevine / LeadDocket contacts to YouSquared contacts; Hank greets saved numbers by name</li>
+          <li>Obtain Filevine API access</li>
+          <li>Confirm which fields Hank should access and be able to share / discuss with existing clients</li>
+          <li>Obtain phone numbers of staff so Hank knows exactly who to transfer to</li>
+          <li>Add staff to the YouSquared team account so calendars can be synced — Hank can schedule into their calendar when they can't be reached live</li>
+          <li>Implement outbound texts / calls as client cases progress — proactive status updates</li>
         </ul>
       </div>
       <div class="roadmap-example">
@@ -639,13 +652,14 @@
           <div class="sub">Phone system embedded; Hank qualifies, then the hunt group rings the right attorneys.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
-            <button class="rm-chip" data-target="nitty"   onclick="toggleRoadmapPanel(this)">▸ nitty-gritty steps</button>
           </div>
         </div>
-        <div class="roadmap-impact">Zero missed leads in storm spikes. Full visibility into every call, every outcome.</div>
+        <div class="roadmap-impact">
+          Zero missed leads in storm spikes. Full visibility into every call, every outcome.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
       </div>
       <div class="roadmap-nitty">
-        <div class="nitty-label">Getting there</div>
         <ul>
           <li>Update RingCentral call-forwarding so Hank answers first on every line</li>
           <li>Create a hunt group so "talk to someone" rings all available phones at once</li>
@@ -673,16 +687,17 @@
           <div class="sub">When contractor/adjuster customers' callers mention insurance disputes, Hank brokers the intro to ICHQ.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
-            <button class="rm-chip" data-target="nitty"   onclick="toggleRoadmapPanel(this)">▸ nitty-gritty steps</button>
           </div>
         </div>
-        <div class="roadmap-impact">Bidirectional flywheel — we feed you client leads; you promote Y² into your contractor referral network.</div>
+        <div class="roadmap-impact">
+          Bidirectional flywheel — we feed you client leads; you promote Y² into your contractor referral network.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
       </div>
       <div class="roadmap-nitty">
-        <div class="nitty-label">Getting there</div>
         <ul>
           <li>Co-design referral detection criteria with Y²'s contractor &amp; adjuster accounts (anonymized prod-call scan first)</li>
-          <li>Agree the hand-off script + which ICHQ intake line receives the bridged call</li>
+          <li>Agree the hand-off script &amp; which ICHQ intake line receives the bridged call</li>
         </ul>
       </div>
       <div class="roadmap-example">
