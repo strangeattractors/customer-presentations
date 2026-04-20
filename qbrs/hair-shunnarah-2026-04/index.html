@@ -134,6 +134,8 @@
   .call-transcript { max-height:0; overflow:hidden; transition:max-height 0.45s ease, margin 0.45s ease; background:#FFFFFF; border-radius:12px; border:1px solid #E6DFD9; }
   .call-transcript.open { max-height:480px; margin-top:14px; overflow-y:auto; }
   .ct-header { position:sticky; top:0; background:linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.95) 100%); padding:12px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .ct-close { background:transparent; border:1px solid #E6DFD9; color:var(--text2); width:26px; height:26px; border-radius:50%; font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s, color 0.15s; padding:0; line-height:1; }
+  .ct-close:hover { background:var(--accent); color:white; border-color:var(--accent); }
   .ct-body { padding:14px 18px 18px; }
   .ct-turn { margin-bottom:10px; font-size:0.82rem; line-height:1.55; }
   .ct-turn .sp { display:inline-block; min-width:60px; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; margin-right:8px; vertical-align:baseline; }
@@ -303,7 +305,7 @@
         <audio class="ccq-audio-hidden" preload="none" src="assets/call-smittys-masstort.mp3"></audio>
       </div>
       <div class="call-transcript" id="transcript-smittys">
-        <div class="ct-header"><span>Transcript · anonymized</span><span style="font-weight:500; letter-spacing:0; text-transform:none; color:var(--text3); font-size:0.74rem;">▲ collapses on stop</span></div>
+        <div class="ct-header"><span>Transcript · anonymized</span><button class="ct-close" onclick="closeTranscript(this)" aria-label="Close transcript">✕</button></div>
         <div class="ct-body">
           <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hair Shunnarah, this is Hank. How can I help you?</span></div>
           <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, sir. How you doing this morning?</span></div>
@@ -361,7 +363,7 @@
         <audio class="ccq-audio-hidden" preload="none" src="assets/call-water-damage.mp3"></audio>
       </div>
       <div class="call-transcript" id="transcript-water">
-        <div class="ct-header"><span>Transcript · anonymized</span><span style="font-weight:500; letter-spacing:0; text-transform:none; color:var(--text3); font-size:0.74rem;">▲ collapses on stop</span></div>
+        <div class="ct-header"><span>Transcript · anonymized</span><button class="ct-close" onclick="closeTranscript(this)" aria-label="Close transcript">✕</button></div>
         <div class="ct-body">
           <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi there. You've reached Hair Shunnarah trial attorneys. How can I help you today?</span></div>
           <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling about uh to get information for a homeowner's dispute lawyer. Are you homeowner's insurance dispute?</span></div>
@@ -563,17 +565,17 @@
 </div>
 
 <script>
-/* Click-to-play audio on call cards; transcript opens with it */
+/* Play/pause audio; transcript opens on play, stays open on pause/end.
+   Explicit ✕ on transcript header collapses it. */
 function playCall(card){
   const audio = card.querySelector('audio');
   if(!audio) return;
   const transcript = card.parentElement.querySelector('.call-transcript');
-  // Pause + collapse any other playing card
+  // Pause any other playing card (leave their transcript state alone unless we're opening this one's)
   document.querySelectorAll('.call-card-qbr.playing').forEach(other => {
     if(other !== card){
       other.classList.remove('playing');
-      const a = other.querySelector('audio'); if(a){ a.pause(); a.currentTime = 0; }
-      const t = other.parentElement.querySelector('.call-transcript'); if(t) t.classList.remove('open');
+      const a = other.querySelector('audio'); if(a){ a.pause(); }
     }
   });
   if(audio.paused){
@@ -583,14 +585,19 @@ function playCall(card){
     }).catch(e=>console.error(e));
   } else {
     audio.pause();
-    audio.currentTime = 0;
     card.classList.remove('playing');
-    if(transcript) transcript.classList.remove('open');
+    // transcript stays open for reading
   }
   audio.onended = () => {
     card.classList.remove('playing');
-    if(transcript) transcript.classList.remove('open');
+    audio.currentTime = 0;
+    // transcript stays open
   };
+}
+
+function closeTranscript(btn){
+  const t = btn.closest('.call-transcript');
+  if(t) t.classList.remove('open');
 }
 
 Chart.register(ChartDataLabels);
