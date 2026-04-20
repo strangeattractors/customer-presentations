@@ -121,6 +121,21 @@
   .call-card-qbr.playing::after { content:'❚❚ Playing'; position:absolute; top:18px; right:18px; font-size:0.7rem; letter-spacing:0.1em; font-weight:600; background:rgba(0,0,0,0.55); color:white; padding:4px 10px; border-radius:14px; z-index:3; }
   .ccq-audio-hidden { display:none; }
 
+  /* Stats dashboard */
+  .metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
+  .metric-card { background:var(--bg2); border-radius:12px; padding:18px 20px; border-left:3px solid var(--accent); }
+  .metric-label { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text2); font-weight:600; margin-bottom:6px; }
+  .metric-value { font-family:'Lora',serif; font-size:2.2rem; font-weight:700; color:var(--text); line-height:1; }
+  .metric-sub { margin-top:6px; font-size:0.78rem; color:var(--text2); line-height:1.4; }
+  .panel-label { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:8px; }
+  .panel-sub { font-size:0.78rem; color:var(--text2); margin-top:8px; line-height:1.5; }
+  .mini-call { background:var(--bg2); border-radius:10px; padding:14px 16px; border-left:3px solid var(--accent); display:flex; flex-direction:column; gap:6px; }
+  .mini-call-pill { display:inline-flex; align-self:flex-start; background:rgba(224,122,95,0.14); color:var(--accent-deep); border-radius:14px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; }
+  .mini-call-pill.variant2 { background:rgba(232,184,125,0.22); color:#A8793A; }
+  .mini-call-title { font-weight:600; font-size:0.92rem; color:var(--text); }
+  .mini-call-fee { display:flex; justify-content:space-between; align-items:baseline; font-size:0.8rem; color:var(--text2); }
+  .mini-call-fee strong { font-family:'Lora',serif; font-size:1.05rem; color:var(--accent-deep); font-weight:700; }
+
   /* Confidential stripe */
   .confidential-stripe { background:#2D2A26; color:#FF8370; text-align:center; padding:10px 20px; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; border-radius:10px 10px 0 0; margin-bottom:-16px; position:relative; z-index:1; }
 
@@ -162,7 +177,7 @@
     <img src="assets/logo_yousquared.png" alt="YouSquared" height="44" style="height:44px;">
   </div>
   <div class="subtitle">Q1 2026 Business Review</div>
-  <h1>Making sure every caller reaches ICHQ — day or night.</h1>
+  <h1>Every claimant heard. Every call answered instantly.</h1>
   <div class="meta">
     <div class="meta-block">
       <div class="label">For</div>
@@ -179,18 +194,61 @@
   </div>
 </div>
 
-<!-- ============== 2. PARTNERSHIP OBJECTIVE ============== -->
+<!-- ============== 2. BY THE NUMBERS (STATS DASHBOARD) ============== -->
 <div class="page">
-  <div class="eyebrow">Partnership Objective</div>
-  <h2>Your story is our North Star.</h2>
-  <div class="pullquote">
-    We know your story — because it's ours, too.
-    <div class="pullquote-source">Insurance Claim HQ — About Us</div>
+  <div class="eyebrow">By the Numbers</div>
+  <h2>Hank's first 10 months at Hair Shunnarah.</h2>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">New leads captured</div>
+      <div class="metric-value">308</div>
+      <div class="metric-sub">95% off-hours · unreachable without Hank</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Calls handled</div>
+      <div class="metric-value">1,063</div>
+      <div class="metric-sub">24/7 coverage since Jun 16, 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Seats enabled</div>
+      <div class="metric-value">3</div>
+      <div class="metric-sub">GH · SR · RG — firm-wide intake</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Channels connected</div>
+      <div class="metric-value">4</div>
+      <div class="metric-sub">Voice · SMS · Email · LeadDocket</div>
+    </div>
   </div>
-  <p class="lead">Every ICHQ call is someone whose roof is gone, whose basement is underwater, or who just got a lowball offer from their insurer. They need to reach a lawyer who gets it — <strong>immediately</strong>, day or night.</p>
-  <div style="background:var(--bg2); border-radius:12px; padding:28px 32px; margin-top:28px;">
-    <h3 style="color:var(--accent-deep); margin-bottom:12px;">Hank's job</h3>
-    <p style="margin:0;">Be the first voice those callers hear — when the switchboard is closed, when the office is slammed, when a hurricane has the phones ringing off the hook. Qualify them, capture their story, and hand them to your team ready to go.</p>
+
+  <div class="two-col" style="gap:28px; margin-top:32px;">
+    <div>
+      <div class="panel-label">Estimated contingency-fee value captured</div>
+      <div style="height:200px;"><canvas id="valueChart"></canvas></div>
+      <div class="panel-sub"><strong style="color:var(--accent-deep);">~$8.0M</strong> total potential · <strong style="color:var(--accent-deep);">~$2.0M</strong> conversion-adjusted (33% × $80K avg PI settlement, 25% inbound conversion)</div>
+    </div>
+    <div>
+      <div class="panel-label">Call volume per month</div>
+      <div style="height:200px;"><canvas id="miniVolumeChart"></canvas></div>
+      <div class="panel-sub">Peaks track Gulf Coast storm season · <strong style="color:var(--accent-deep);">1,063 total</strong> calls, <strong style="color:var(--accent-deep);">488 substantive</strong></div>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;">
+    <div class="panel-label" style="margin-bottom:10px;">Two calls worth hearing — see slide 5 →</div>
+    <div class="two-col" style="gap:14px;">
+      <div class="mini-call">
+        <div class="mini-call-pill">⚗️ Mass tort · Smitty's Supply</div>
+        <div class="mini-call-title">Chemical exposure, 15 mi downriver</div>
+        <div class="mini-call-fee"><span>Est. fee</span><strong>$10K – $33K</strong></div>
+      </div>
+      <div class="mini-call">
+        <div class="mini-call-pill variant2">❤️ Engagement · Elderly Allstate caller</div>
+        <div class="mini-call-title">76yo, gutted home, $18K payout on $80K+ damage</div>
+        <div class="mini-call-fee"><span>Est. fee</span><strong>$26K – $66K</strong></div>
+      </div>
+    </div>
   </div>
   <div class="page-num">02</div>
 </div>
@@ -621,6 +679,60 @@ const bizHoursBand = {
     ctx.restore();
   }
 };
+
+/* ============ SLIDE 2 — $ VALUE + MINI VOLUME ============ */
+const monthLabels = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr*'];
+const monthlyNewLeads = [17,38,46,20,33,54,30,19,16,23,10];
+const AVG_FEE = 26000; // 33% × $80k avg PI settlement
+const CONV = 0.25;
+const monthlyPotential = monthlyNewLeads.map(n => Math.round(n * AVG_FEE / 1000)); // K
+const monthlyAdjusted  = monthlyNewLeads.map(n => Math.round(n * AVG_FEE * CONV / 1000)); // K
+
+new Chart(document.getElementById('valueChart').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:monthLabels,
+    datasets:[
+      { label:'Potential ($K)',   data:monthlyPotential, backgroundColor:'rgba(224,122,95,0.25)', borderColor:'#E07A5F', borderWidth:1, borderRadius:3, stack:'$' },
+      { label:'Conv-adjusted ($K)', data:monthlyAdjusted,  backgroundColor:'#E07A5F', borderRadius:3, stack:'conv' }
+    ]
+  },
+  plugins:[ChartDataLabels],
+  options:{
+    responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+    plugins:{ legend:{display:false}, datalabels:{display:false}, tooltip:{backgroundColor:'#2D2A26',callbacks:{label:function(ctx){return ctx.dataset.label+': $'+ctx.parsed.y+'K';}}} },
+    scales:{
+      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
+      y:{beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}, callback:function(v){return '$'+v+'K';}}}
+    }
+  }
+});
+
+// Mini volume chart — same Jun-Apr monthly data as slide 4
+const mvUrgent    = [45,17,13, 5,11, 9, 8,15,13,10, 4];
+const mvNonUrgent = [17,38,46,20,33,54,30,19,16,23,10];
+const mvEmpty     = [77,63,86,56,119,93,73,38,17,23,44];
+const mvSpam      = [ 6, 5,12, 4, 8, 8, 4, 2, 2, 2, 1];
+new Chart(document.getElementById('miniVolumeChart').getContext('2d'), {
+  type:'line',
+  data:{
+    labels:monthLabels,
+    datasets:[
+      { label:'Spam',       data:mvSpam,      backgroundColor:'#B97A73', borderColor:'#B97A73', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Empty',      data:mvEmpty,     backgroundColor:'#C9C3BE', borderColor:'#C9C3BE', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Non-urgent', data:mvNonUrgent, backgroundColor:'#E8B87D', borderColor:'#E8B87D', fill:true, tension:0.35, pointRadius:0, borderWidth:0 },
+      { label:'Urgent',     data:mvUrgent,    backgroundColor:'#E07A5F', borderColor:'#E07A5F', fill:true, tension:0.35, pointRadius:0, borderWidth:0 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{backgroundColor:'#2D2A26'}},
+    scales:{
+      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}}},
+      y:{stacked:true, beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:10}}, max:180}
+    }
+  }
+});
 
 /* ============ HOURLY (24h) CHART — Slide 3 ============ */
 const hours = Array.from({length:24}, (_,i)=>i+':00');
