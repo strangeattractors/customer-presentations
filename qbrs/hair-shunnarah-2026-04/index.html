@@ -100,6 +100,30 @@
   .ask-list .ask-title { font-weight:600; font-size:1.05em; }
   .ask-list .ask-sub { color:var(--text2); font-size:0.9em; margin-top:4px; }
 
+  /* Call card (QBR — pitch-deck style, click-to-play audio) */
+  .call-card-qbr { position:relative; aspect-ratio:16/10; background:linear-gradient(165deg,#1a1816 0%,#2D2A26 50%,#3A3632 100%); color:white; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 24px rgba(45,42,38,0.18); cursor:pointer; transition:transform 0.25s, border-color 0.25s; }
+  .call-card-qbr:hover { transform:translateY(-2px); border-color:rgba(224,122,95,0.5); }
+  .call-card-qbr::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 75% 25%, rgba(224,122,95,0.22) 0%, transparent 55%); pointer-events:none; }
+  .ccq-waveform { position:absolute; left:0; right:0; bottom:0; height:60px; background:repeating-linear-gradient(90deg, rgba(224,122,95,0.25) 0, rgba(224,122,95,0.25) 2px, transparent 2px, transparent 5px); mask-image:linear-gradient(to top, black, transparent); opacity:0.55; pointer-events:none; }
+  .ccq-waveform.variant2 { background:repeating-linear-gradient(90deg, rgba(232,184,125,0.3) 0, rgba(232,184,125,0.3) 2px, transparent 2px, transparent 4px); }
+  .call-card-qbr > .ccq-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:20px 22px; pointer-events:none; z-index:2; }
+  .ccq-pill { display:inline-flex; align-self:flex-start; align-items:center; gap:6px; background:rgba(224,122,95,0.22); border:1px solid rgba(224,122,95,0.45); border-radius:20px; padding:4px 11px; font-size:0.66rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#FF8370; backdrop-filter:blur(6px); }
+  .ccq-pill.variant2 { background:rgba(232,184,125,0.2); border-color:rgba(232,184,125,0.45); color:#E8B87D; }
+  .ccq-title { font-family:'Lora',serif; font-size:1.15rem; font-weight:700; line-height:1.25; color:#fff; margin-bottom:6px; }
+  .ccq-desc { font-size:0.8rem; color:rgba(255,255,255,0.72); line-height:1.5; }
+  .ccq-quote { font-family:'Lora',serif; font-size:0.92rem; font-style:italic; color:rgba(255,255,255,0.88); padding-left:14px; border-left:3px solid var(--accent); margin-bottom:10px; line-height:1.45; }
+  .ccq-meta-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .ccq-tag { font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.7); background:rgba(255,255,255,0.08); border-radius:6px; padding:3px 9px; }
+  .ccq-play-btn { position:absolute; top:16px; right:16px; width:44px; height:44px; background:rgba(224,122,95,0.95); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.4); z-index:3; transition:transform 0.2s, background 0.2s, opacity 0.25s; pointer-events:none; }
+  .call-card-qbr:hover .ccq-play-btn { transform:scale(1.08); background:#FF8370; }
+  .ccq-play-btn::after { content:''; width:0; height:0; border-top:7px solid transparent; border-bottom:7px solid transparent; border-left:11px solid white; margin-left:3px; }
+  .call-card-qbr.playing .ccq-play-btn { opacity:0; }
+  .call-card-qbr.playing::after { content:'❚❚ Playing'; position:absolute; top:18px; right:18px; font-size:0.7rem; letter-spacing:0.1em; font-weight:600; background:rgba(0,0,0,0.55); color:white; padding:4px 10px; border-radius:14px; z-index:3; }
+  .ccq-audio-hidden { display:none; }
+
+  /* Confidential stripe */
+  .confidential-stripe { background:#2D2A26; color:#FF8370; text-align:center; padding:10px 20px; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; border-radius:10px 10px 0 0; margin-bottom:-16px; position:relative; z-index:1; }
+
   /* Utility */
   .sep { height:1px; background:#E6DFD9; margin:32px 0; }
   @media print { body{background:white;} .page,.hero{box-shadow:none; margin:0; page-break-after:always;} .deck{padding:0;} }
@@ -107,6 +131,8 @@
 </head>
 <body>
 <div class="deck">
+
+<div class="confidential-stripe">Confidential — Hair Shunnarah × YouSquared Partnership — Not for redistribution</div>
 
 <!-- ============== 1. HERO ============== -->
 <div class="hero">
@@ -149,25 +175,39 @@
   <div class="page-num">02</div>
 </div>
 
-<!-- ============== 3. KPI + HEADLINE ============== -->
+<!-- ============== 3. KPI + 24-HOUR HISTOGRAM ============== -->
 <div class="page alt">
   <div class="eyebrow">KPI &amp; Where We Are Today</div>
-  <h2>Revenue uplift from callers Hank recovers.</h2>
-  <p class="lead" style="max-width:700px;">Clients who'd otherwise have bounced to a competitor or given up — measured as <strong>qualified intakes captured outside business hours</strong> × avg PI case value.</p>
+  <h2>95% of new-client leads arrive off-hours.</h2>
+  <p class="lead" style="max-width:760px;">
+    KPI = <strong>revenue uplift from callers Hank recovers</strong> — clients who'd otherwise have bounced to a competitor or given up. Measured as qualified intakes captured outside business hours × avg PI case value.
+  </p>
 
-  <div class="big-stat" style="margin-top:20px;">
-    <div class="num">95%<span class="num-suffix"> off-hours</span></div>
-    <div class="caption"><strong>1,015 of 1,063 Hank calls</strong> since June 16, 2025 arrived when ICHQ's team wasn't at the desk — weekends, evenings, early mornings.</div>
+  <div style="display:flex; gap:18px; align-items:center; margin-top:28px; margin-bottom:10px;">
+    <div style="font-size:0.72em; letter-spacing:0.14em; text-transform:uppercase; color:var(--text2); font-weight:600;">Hank call volume by hour of day · America/Chicago · since Jun 16, 2025</div>
+  </div>
+  <div class="chart-wrap" style="height:280px;">
+    <canvas id="hourlyChart"></canvas>
+  </div>
+  <div style="display:flex; gap:20px; margin-top:6px; font-size:0.8em; color:var(--text2);">
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#E07A5F;border-radius:2px;"></span> New client lead</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#E8B87D;border-radius:2px;"></span> Existing client</div>
+    <div style="display:flex; align-items:center; gap:6px;"><span style="width:12px;height:12px;background:#C9C3BE;border-radius:2px;"></span> Unqualified / hang-up</div>
+    <div style="margin-left:auto; font-style:italic;">Shaded band = ICHQ business hours (Mon–Fri 8a–5p CT)</div>
   </div>
 
-  <div class="fact-grid" style="margin-top:40px;">
-    <div class="fact-card">
-      <div class="fact-num">~91<span style="font-size:0.55em; color:var(--text2); font-weight:500;"> / mo</span></div>
-      <div class="fact-label">After-hours calls answered by a real first response — instead of a voicemail box.</div>
+  <div class="fact-grid" style="margin-top:32px; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">308</div>
+      <div class="fact-label" style="font-size:0.88em;">New client leads Hank has captured.</div>
     </div>
-    <div class="fact-card">
-      <div class="fact-num">488</div>
-      <div class="fact-label">Substantive intakes (urgent + non-urgent) captured for your team so far.</div>
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">292</div>
+      <div class="fact-label" style="font-size:0.88em;">Of those, arrived <strong>off-hours</strong> — unreachable without Hank.</div>
+    </div>
+    <div class="fact-card" style="padding:18px 20px;">
+      <div class="fact-num" style="font-size:1.7em;">7<span style="font-size:0.6em; color:var(--text2); font-weight:500;">am &amp;</span> 8<span style="font-size:0.6em; color:var(--text2); font-weight:500;">pm</span></div>
+      <div class="fact-label" style="font-size:0.88em;">Peak call windows — right before open &amp; right after close.</div>
     </div>
   </div>
   <div class="page-num">03</div>
@@ -204,27 +244,63 @@
   <div class="page-num">04</div>
 </div>
 
-<!-- ============== 5. WHAT'S WORKING ============== -->
+<!-- ============== 5. WHAT'S WORKING + SHOWCASE CALLS ============== -->
 <div class="page alt">
   <div class="eyebrow">What's Working</div>
-  <h2>Hank is getting sharper every month.</h2>
+  <h2>Two calls worth hearing.</h2>
+  <p class="lead" style="max-width:720px;">Hank's average conversation has deepened from <strong>50 seconds</strong> last summer to <strong>3 minutes</strong> by March '26 — callers are completing fuller intakes. Two recent examples:</p>
 
-  <div class="two-col" style="margin-top:20px;">
-    <div>
-      <h3 style="color:var(--accent-deep); font-size:1.15em; margin-bottom:8px;">Calls are getting deeper.</h3>
-      <p>Average Hank conversation grew from <strong>50 seconds</strong> in summer '25 to <strong>3 minutes</strong> by March '26. Callers are completing fuller intakes — Hank is closing more of the conversation, not just taking a message.</p>
+  <div class="two-col" style="gap:24px; margin-top:20px;">
+
+    <!-- CALL 1: HIGH VALUE -->
+    <div class="call-card-qbr" onclick="playCall(this)">
+      <div class="ccq-waveform"></div>
+      <div class="ccq-overlay">
+        <span class="ccq-pill">🚚 Property · Commercial truck collision</span>
+        <div>
+          <div class="ccq-quote">"Would you like help making sure you get a fair assessment…" — "Absolutely."</div>
+          <div class="ccq-title">Commercial truck crashed into a family home.</div>
+          <div class="ccq-desc">Insurer's adjuster missed significant damage. Caller asked ICHQ to represent him, requested the agreement by email.</div>
+          <div class="ccq-meta-row">
+            <span class="ccq-tag">10 min</span>
+            <span class="ccq-tag">Urgent</span>
+            <span class="ccq-tag">Fri · 9:39 AM CT</span>
+          </div>
+        </div>
+      </div>
+      <div class="ccq-play-btn"></div>
+      <audio class="ccq-audio-hidden" preload="none" src="assets/call-truck-collision.mp3"></audio>
     </div>
-    <div>
-      <h3 style="color:var(--accent-deep); font-size:1.15em; margin-bottom:8px;">Storm surges, no misses.</h3>
-      <p>October and November '25 brought <strong>330 calls in 2 months</strong> — the busiest stretch since go-live. Zero dropped, zero overflow backlog. Hank absorbed the spike without your team staffing up.</p>
+
+    <!-- CALL 2: AI FASCINATION -->
+    <div class="call-card-qbr" onclick="playCall(this)">
+      <div class="ccq-waveform variant2"></div>
+      <div class="ccq-overlay">
+        <span class="ccq-pill variant2">❤️ Engagement · Elderly caller, Saturday</span>
+        <div>
+          <div class="ccq-quote">"Bye. Thank you so much. Can't wait to hear from you."</div>
+          <div class="ccq-title">A full intake from a distressed, elderly caller who felt heard.</div>
+          <div class="ccq-desc">First-time Allstate claim, home unlivable from water damage. She poured out the story to Hank, thanked him repeatedly, hung up reassured — on a Saturday with no ICHQ staff on the line.</div>
+          <div class="ccq-meta-row">
+            <span class="ccq-tag">12 min</span>
+            <span class="ccq-tag">Urgent</span>
+            <span class="ccq-tag">Sat · 3:38 PM CT</span>
+          </div>
+        </div>
+      </div>
+      <div class="ccq-play-btn"></div>
+      <audio class="ccq-audio-hidden" preload="none" src="assets/call-water-damage.mp3"></audio>
     </div>
-    <div>
-      <h3 style="color:var(--accent-deep); font-size:1.15em; margin-bottom:8px;">Every lead in LeadDocket.</h3>
-      <p>Since <strong>Feb 4, 2026</strong>, every qualified intake Hank captures is written directly into your LeadDocket pipeline — no re-keying, no cold hand-offs.</p>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;">
+    <div class="fact-card" style="background:#FFFFFF;">
+      <div class="fact-num" style="font-size:1.6em;">330</div>
+      <div class="fact-label">Calls handled in Oct + Nov '25 — the busiest storm-season stretch. Zero dropped, zero backlog.</div>
     </div>
-    <div>
-      <h3 style="color:var(--accent-deep); font-size:1.15em; margin-bottom:8px;">Substantive vs noise.</h3>
-      <p><strong>488 substantive intakes</strong> (urgent + non-urgent) delivered. Hank filtered out the hang-ups and misrouted calls so your team only sees the ones worth a call back.</p>
+    <div class="fact-card" style="background:#FFFFFF;">
+      <div class="fact-num" style="font-size:1.6em;">100%</div>
+      <div class="fact-label">Of qualified intakes flowing into LeadDocket since Feb 4, 2026 — no re-keying, no cold hand-offs.</div>
     </div>
   </div>
   <div class="page-num">05</div>
@@ -393,7 +469,82 @@
 </div>
 
 <script>
+/* Click-to-play audio on call cards */
+function playCall(card){
+  const audio = card.querySelector('audio');
+  if(!audio) return;
+  // Pause any other playing card
+  document.querySelectorAll('.call-card-qbr.playing').forEach(other => {
+    if(other !== card){
+      other.classList.remove('playing');
+      const a = other.querySelector('audio'); if(a){ a.pause(); a.currentTime = 0; }
+    }
+  });
+  if(audio.paused){
+    audio.play().then(()=>card.classList.add('playing')).catch(e=>console.error(e));
+  } else {
+    audio.pause();
+    audio.currentTime = 0;
+    card.classList.remove('playing');
+  }
+  audio.onended = () => card.classList.remove('playing');
+}
+
 Chart.register(ChartDataLabels);
+
+/* Business-hours shaded band plugin for the hourly chart */
+const bizHoursBand = {
+  id:'bizHoursBand',
+  beforeDatasetsDraw(chart){
+    const {ctx, chartArea, scales:{x,y}} = chart;
+    if(!chartArea) return;
+    const xStart = x.getPixelForValue(8) - (x.getPixelForValue(1)-x.getPixelForValue(0))/2;
+    const xEnd   = x.getPixelForValue(16) + (x.getPixelForValue(1)-x.getPixelForValue(0))/2;
+    ctx.save();
+    ctx.fillStyle = 'rgba(45,42,38,0.05)';
+    ctx.fillRect(xStart, chartArea.top, xEnd-xStart, chartArea.bottom-chartArea.top);
+    // Vertical dashed borders
+    ctx.strokeStyle = 'rgba(45,42,38,0.18)';
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(xStart, chartArea.top); ctx.lineTo(xStart, chartArea.bottom); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(xEnd, chartArea.top); ctx.lineTo(xEnd, chartArea.bottom); ctx.stroke();
+    ctx.restore();
+  }
+};
+
+/* ============ HOURLY (24h) CHART — Slide 3 ============ */
+const hours = Array.from({length:24}, (_,i)=>i+':00');
+const unqualified = [5,1,6,6,7,4,6,52,13,23,25,31,27,25,17,20,28,42,15,30,88,63,59,68];
+const existing    = [0,0,0,0,1,1,3,37, 3, 4,11, 4, 5, 3, 8, 3, 5, 1, 2, 0, 2, 1, 0, 0];
+const newLead     = [1,0,2,3,2,3,16,50, 8,17,18,16,15,15,12,16, 9,17, 5,10,35,14,12,12];
+
+new Chart(document.getElementById('hourlyChart').getContext('2d'), {
+  type:'line',
+  data:{
+    labels:hours,
+    datasets:[
+      { label:'Unqualified',     data:unqualified, backgroundColor:'#C9C3BE', borderColor:'#C9C3BE', fill:true, tension:0.4, pointRadius:0, borderWidth:0 },
+      { label:'Existing client', data:existing,    backgroundColor:'#E8B87D', borderColor:'#E8B87D', fill:true, tension:0.4, pointRadius:0, borderWidth:0 },
+      { label:'New client lead', data:newLead,     backgroundColor:'#E07A5F', borderColor:'#E07A5F', fill:true, tension:0.4, pointRadius:0, borderWidth:0 }
+    ]
+  },
+  plugins:[bizHoursBand],
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index', intersect:false},
+    plugins:{
+      legend:{display:false},
+      datalabels:{display:false},
+      tooltip:{backgroundColor:'#2D2A26', titleFont:{family:'Lora'}, bodyFont:{family:'Inter'}}
+    },
+    scales:{
+      x:{grid:{display:false}, ticks:{color:'#6B6560', font:{family:'Inter', size:10}, autoSkip:false, callback:function(v,i){ return i%2===0 ? (i+':00') : ''; } }},
+      y:{stacked:true, beginAtZero:true, grid:{color:'#EDE8E3'}, ticks:{color:'#9E9893', font:{family:'Inter', size:11}}}
+    }
+  }
+});
+
+/* ============ MONTHLY USAGE CHART — Slide 4 ============ */
 const ctx = document.getElementById('usageChart').getContext('2d');
 const months = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr*'];
 const urgent    = [45,17,13, 5,11, 9, 8,15,13,10, 4];
