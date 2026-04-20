@@ -123,13 +123,28 @@
   .roadmap-nitty li { margin-bottom:4px; }
 
   /* Referral candidates list (bullet 4 example panel) */
+  .ref-tabs { display:flex; gap:6px; padding:10px 18px 0; background:#FFFFFF; border-bottom:1px solid #E6DFD9; position:sticky; top:0; z-index:2; }
+  .ref-tab { background:transparent; border:none; color:var(--text2); font-size:0.78rem; font-weight:600; padding:8px 14px; border-radius:8px 8px 0 0; cursor:pointer; font-family:inherit; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .ref-tab:hover { color:var(--text); background:rgba(224,122,95,0.06); }
+  .ref-tab.active { color:var(--accent-deep); border-bottom-color:var(--accent); }
+  .ref-panel { padding:14px 18px; display:none; }
+  .ref-panel.active { display:block; }
+  .ref-tab-desc { background:rgba(232,184,125,0.12); border-left:3px solid var(--gold); padding:10px 14px; border-radius:0 8px 8px 0; font-size:0.8rem; color:var(--text); line-height:1.5; margin-bottom:14px; }
+  .ref-list { display:flex; flex-direction:column; gap:10px; }
+  .ref-loading { color:var(--text2); font-size:0.85em; padding:14px 0; }
   .ref-row { background:#FFFFFF; border:1px solid #E6DFD9; border-radius:8px; padding:10px 14px; font-size:0.8rem; line-height:1.5; }
   .ref-row.clear { border-left:3px solid var(--accent); }
   .ref-row.potential { border-left:3px solid var(--gold); }
+  .ref-row.asta_fit, .ref-row.asta { border-left:3px solid #6A8D73; }
+  .ref-row.maybe { border-left:3px solid #B8B3A8; }
+  .ref-row.tcpa { border-left:3px solid #B97A73; }
   .ref-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
   .ref-badge { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; }
   .ref-badge.clear { background:rgba(224,122,95,0.15); color:var(--accent-deep); }
   .ref-badge.potential { background:rgba(232,184,125,0.22); color:#A8793A; }
+  .ref-badge.asta_fit, .ref-badge.asta { background:rgba(106,141,115,0.15); color:#4A6651; }
+  .ref-badge.maybe { background:#EDE8E3; color:var(--text2); }
+  .ref-badge.tcpa { background:rgba(185,122,115,0.18); color:#8A4038; }
   .ref-convid { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:0.72rem; color:var(--text2); }
   .ref-date { font-size:0.72rem; color:var(--text3); }
   .ref-subtype { font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); font-weight:600; }
@@ -731,14 +746,14 @@
       <div class="roadmap-row">
         <div class="roadmap-num">4</div>
         <div class="roadmap-what">
-          Hank facilitates contractor &amp; adjuster referrals.
-          <div class="sub">When contractor/adjuster customers' callers mention insurance disputes, Hank brokers the intro to HSTA.</div>
+          YouSquared facilitates case referrals from its network of users.
+          <div class="sub">When a Y² user's caller has a legal matter HSTA or ASTA handles, Hank brokers the intro — and our repeat spam callers become TCPA leads.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example calls</button>
           </div>
         </div>
         <div class="roadmap-impact">
-          Every contractor, adjuster or roofer on YouSquared sends HSTA <strong style="color:var(--accent-deep);">~3 potential client leads a year</strong> — and there are hundreds more to onboard.
+          Three lanes: <strong>property insurance</strong> cases that help a Y² user get paid, <strong>ASTA</strong>-handled matters (auto, injury, wrongful death, torts), and <strong>TCPA</strong> cases from repeat spam callers who were told to stop.
           <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
         </div>
       </div>
@@ -751,10 +766,24 @@
         </ul>
       </div>
       <div class="roadmap-example" id="referralExamples">
-        <div class="ct-header"><span>Real calls from the past 10 months · 16 clear fits + 24 potential fits · anonymized</span></div>
+        <div class="ct-header"><span>Real calls from the YouSquared network · past 10 months · anonymized</span></div>
         <div class="ct-body">
-          <div id="refList" style="display:flex; flex-direction:column; gap:10px;">
-            <div class="ref-loading" style="color:var(--text2); font-size:0.85em;">Loading candidates…</div>
+          <div class="ref-tabs">
+            <button class="ref-tab active" data-tab="property" onclick="switchRefTab(this)">🏠 Property insurance</button>
+            <button class="ref-tab" data-tab="asta" onclick="switchRefTab(this)">⚖️ ASTA matters</button>
+            <button class="ref-tab" data-tab="tcpa" onclick="switchRefTab(this)">🚫 TCPA (repeat spam)</button>
+          </div>
+          <div class="ref-panel active" id="refPanel-property">
+            <div class="ref-tab-desc">Caller has an active home-insurance claim that's being underpaid, delayed or denied — <strong>and the Y² user (roofer, adjuster, restoration firm) gets paid once HSTA unsticks the carrier.</strong> Win-win referral.</div>
+            <div class="ref-list" id="refList-property"><div class="ref-loading">Loading…</div></div>
+          </div>
+          <div class="ref-panel" id="refPanel-asta" hidden>
+            <div class="ref-tab-desc">Calls where a caller describes a bodily injury, auto accident, wrongful death, workplace injury or other matter Alexander Shunnarah Trial Attorneys and related firms handle.</div>
+            <div class="ref-list" id="refList-asta"><div class="ref-loading">Loading…</div></div>
+          </div>
+          <div class="ref-panel" id="refPanel-tcpa" hidden>
+            <div class="ref-tab-desc">Repeat spam callers who were explicitly asked to stop by Hank and kept calling anyway. Each is a potential Telephone Consumer Protection Act claim.</div>
+            <div class="ref-list" id="refList-tcpa"><div class="ref-loading">Loading…</div></div>
           </div>
         </div>
       </div>
@@ -815,29 +844,72 @@ function toggleRoadmapPanel(btn){
   if(isOpen && panel.id === 'referralExamples') loadReferralList();
 }
 
-let referralListLoaded = false;
-function loadReferralList(){
-  if(referralListLoaded) return;
-  referralListLoaded = true;
-  fetch('assets/referral-candidates.json').then(r => r.json()).then(data => {
-    const el = document.getElementById('refList');
-    el.innerHTML = data.map(c => {
-      const verdictClass = c.verdict === 'clear_fit' ? 'clear' : 'potential';
-      const verdictLabel = c.verdict === 'clear_fit' ? 'Clear fit' : 'Potential fit';
-      return `<div class="ref-row ${verdictClass}">
-        <div class="ref-head">
-          <span class="ref-badge ${verdictClass}">${verdictLabel}</span>
-          <span class="ref-convid">conv ${c.id}</span>
-          <span class="ref-date">${c.date}</span>
-          <span class="ref-subtype">${c.subtype.replace(/_/g,' ')}</span>
-        </div>
-        <div class="ref-report">${(c.report || '').replace(/</g,'&lt;')}</div>
-        ${c.why ? `<div class="ref-why">Why: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
-      </div>`;
-    }).join('');
+const refTabLoaded = { property: false, asta: false, tcpa: false };
+const refTabSrc = {
+  property: 'assets/referral-candidates.json',
+  asta:     'assets/asta-candidates.json',
+  tcpa:     'assets/tcpa-candidates.json',
+};
+
+function renderRefRow(c, tab){
+  const verdict = c.verdict || (tab === 'asta' ? 'asta' : tab === 'tcpa' ? 'tcpa' : 'clear_fit');
+  const cls = verdict === 'clear_fit' ? 'clear' : (verdict === 'potential_fit' ? 'potential' : verdict);
+  const label = {
+    clear_fit:'Clear fit', potential_fit:'Potential fit',
+    asta_fit:'ASTA fit', maybe:'Possible ASTA',
+    tcpa:'TCPA candidate',
+  }[verdict] || verdict;
+  const extra = tab === 'tcpa' && c.call_count
+    ? `<span class="ref-date">${c.call_count} calls · ${c.first_call || ''} → ${c.last_call || ''}</span>` : '';
+  const convInfo = c.id ? `<span class="ref-convid">conv ${c.id}</span>` : (c.phone ? `<span class="ref-convid">${c.phone}</span>` : '');
+  const subtype = c.subtype || c.user_subtype || (Array.isArray(c.industries) ? c.industries.join(', ') : '');
+  return `<div class="ref-row ${cls}">
+    <div class="ref-head">
+      <span class="ref-badge ${cls}">${label}</span>
+      ${convInfo}
+      ${c.date ? `<span class="ref-date">${c.date}</span>` : ''}
+      ${extra}
+      ${subtype ? `<span class="ref-subtype">${String(subtype).replace(/_/g,' ')}</span>` : ''}
+    </div>
+    <div class="ref-report">${(c.report || '').replace(/</g,'&lt;')}</div>
+    ${c.why ? `<div class="ref-why">Why: ${c.why.replace(/</g,'&lt;')}</div>` : ''}
+  </div>`;
+}
+
+function loadRefTab(tab){
+  if(refTabLoaded[tab]) return;
+  refTabLoaded[tab] = true;
+  fetch(refTabSrc[tab]).then(r => {
+    if(!r.ok) throw new Error(r.status + ' — data not ready yet');
+    return r.json();
+  }).then(data => {
+    const el = document.getElementById('refList-' + tab);
+    if(!data.length){
+      el.innerHTML = `<div class="ref-loading">No candidates yet — analysis still running.</div>`;
+      refTabLoaded[tab] = false;
+      return;
+    }
+    el.innerHTML = data.map(c => renderRefRow(c, tab)).join('');
   }).catch(err => {
-    document.getElementById('refList').innerHTML = `<div style="color:#C12B14">Failed to load: ${err.message}</div>`;
+    const el = document.getElementById('refList-' + tab);
+    el.innerHTML = `<div class="ref-loading">${err.message} — check back shortly.</div>`;
+    refTabLoaded[tab] = false;
   });
+}
+
+function switchRefTab(btn){
+  const tab = btn.dataset.tab;
+  document.querySelectorAll('.ref-tab').forEach(t => t.classList.toggle('active', t === btn));
+  document.querySelectorAll('.ref-panel').forEach(p => {
+    const on = p.id === 'refPanel-' + tab;
+    p.classList.toggle('active', on);
+    p.hidden = !on;
+  });
+  loadRefTab(tab);
+}
+
+function loadReferralList(){
+  loadRefTab('property');  // default tab
 }
 
 Chart.register(ChartDataLabels);
