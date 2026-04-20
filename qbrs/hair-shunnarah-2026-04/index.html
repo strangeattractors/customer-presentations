@@ -124,6 +124,24 @@
   /* Confidential stripe */
   .confidential-stripe { background:#2D2A26; color:#FF8370; text-align:center; padding:10px 20px; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:600; border-radius:10px 10px 0 0; margin-bottom:-16px; position:relative; z-index:1; }
 
+  /* Fee callout — prominent on card */
+  .ccq-fee { display:inline-flex; flex-direction:column; align-items:flex-start; gap:2px; background:linear-gradient(135deg, rgba(232,184,125,0.28) 0%, rgba(224,122,95,0.28) 100%); border:1px solid rgba(232,184,125,0.55); border-radius:10px; padding:8px 14px; color:white; margin-top:10px; }
+  .ccq-fee .fee-label { font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:#E8B87D; font-weight:700; }
+  .ccq-fee .fee-value { font-family:'Lora',serif; font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:-0.01em; }
+
+  /* Transcript panel */
+  .call-col { display:flex; flex-direction:column; }
+  .call-transcript { max-height:0; overflow:hidden; transition:max-height 0.45s ease, margin 0.45s ease; background:#FFFFFF; border-radius:12px; border:1px solid #E6DFD9; }
+  .call-transcript.open { max-height:480px; margin-top:14px; overflow-y:auto; }
+  .ct-header { position:sticky; top:0; background:linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.95) 100%); padding:12px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+  .ct-body { padding:14px 18px 18px; }
+  .ct-turn { margin-bottom:10px; font-size:0.82rem; line-height:1.55; }
+  .ct-turn .sp { display:inline-block; min-width:60px; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:4px; margin-right:8px; vertical-align:baseline; }
+  .ct-turn.ai .sp { background:rgba(224,122,95,0.14); color:var(--accent-deep); }
+  .ct-turn.caller .sp { background:#F0EBE6; color:var(--text); }
+  .ct-turn .tx { color:var(--text); }
+  .ct-turn.ai .tx { color:var(--text2); font-style:italic; }
+
   /* Utility */
   .sep { height:1px; background:#E6DFD9; margin:32px 0; }
   @media print { body{background:white;} .page,.hero{box-shadow:none; margin:0; page-break-after:always;} .deck{padding:0;} }
@@ -260,44 +278,112 @@
 
   <div class="two-col" style="gap:24px; margin-top:20px;">
 
-    <!-- CALL 1: HIGH VALUE -->
-    <div class="call-card-qbr" onclick="playCall(this)">
-      <div class="ccq-waveform"></div>
-      <div class="ccq-overlay">
-        <span class="ccq-pill">🚚 Property · Commercial truck collision</span>
-        <div>
-          <div class="ccq-quote">"Would you like help making sure you get a fair assessment…" — "Absolutely."</div>
-          <div class="ccq-title">Commercial truck crashed into a family home.</div>
-          <div class="ccq-desc">Insurer's adjuster missed significant damage. Caller asked ICHQ to represent him, requested the agreement by email.</div>
-          <div class="ccq-meta-row">
-            <span class="ccq-tag">10 min</span>
-            <span class="ccq-tag">Urgent</span>
-            <span class="ccq-tag">Fri · 9:39 AM CT</span>
+    <!-- CALL 1: SMITTY'S MASS TORT -->
+    <div class="call-col">
+      <div class="call-card-qbr" onclick="playCall(this)">
+        <div class="ccq-waveform"></div>
+        <div class="ccq-overlay">
+          <span class="ccq-pill">⚗️ Mass tort · Chemical plant exposure</span>
+          <div>
+            <div class="ccq-quote">"I've never asked anybody for nothing until now."</div>
+            <div class="ccq-title">Smitty's Supply explosion — KM, 15 miles downriver.</div>
+            <div class="ccq-desc">Homeowner on the Tangipahoa River. Oil sheen in the water, chemical smell for a month, ongoing headaches + new eye twitching 2–3 months on. Wants to join the tort.</div>
+            <div class="ccq-fee">
+              <span class="fee-label">Est. contingency fee · 33%</span>
+              <span class="fee-value">$10K – $33K</span>
+            </div>
+            <div class="ccq-meta-row">
+              <span class="ccq-tag">10 min</span>
+              <span class="ccq-tag">Urgent</span>
+              <span class="ccq-tag">Sat · 8:28 AM CT</span>
+            </div>
           </div>
         </div>
+        <div class="ccq-play-btn"></div>
+        <audio class="ccq-audio-hidden" preload="none" src="assets/call-smittys-masstort.mp3"></audio>
       </div>
-      <div class="ccq-play-btn"></div>
-      <audio class="ccq-audio-hidden" preload="none" src="assets/call-truck-collision.mp3"></audio>
+      <div class="call-transcript" id="transcript-smittys">
+        <div class="ct-header"><span>Transcript · anonymized</span><span style="font-weight:500; letter-spacing:0; text-transform:none; color:var(--text3); font-size:0.74rem;">▲ collapses on stop</span></div>
+        <div class="ct-body">
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hair Shunnarah, this is Hank. How can I help you?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, sir. How you doing this morning?</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">I'm doing all right. Thanks for asking. I'm here to help. I'll record this call so our team has the full picture. What's going on today?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling with the Smitty's claim in Louisiana.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Got it. Just so I understand clearly, what's happening with the Smitty's claim in Louisiana?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I live on the Tangipahoa River in Independence, Louisiana, about 15 miles south of where the explosion happened.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Oh, that must have been frightening to be that close. Would you mind sharing what happened on your property after the explosion? And may I get your first name?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">KM.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. Okay, KM — is it all right if I call you by your first name? When you're ready, can you tell me what kind of damage you noticed after the explosion?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, sir. That next morning when I got up, I noticed it was all over the ground — like real slippery, slimy, oil everywhere. And the second day was when the smell arrived. It smelled like a mechanic shop, all kinds of oils. That smell lasted over a month.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">KM, that sounds truly miserable to live through.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Thank you. Yeah. It wasn't easy, but I've done it.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">You've really been pushing through a lot on your own, KM, breathing that smell for weeks, headaches, having to leave your home. What part of it is still affecting you the most right now?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I've noticed that every three, maybe five days, I get another headache. This time the headache is making my eye twitch — my right eye, where the pain is. I've never experienced that. I don't take medicine — you can look at my doctor records. I'm feeling this pain still.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">KM, ongoing headaches and eye twitching after weeks of exposure would worry anyone. Has anything at the property or in the air changed since those headaches started?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I haven't noticed the smell anymore — they came through with airboats and cleaned it up best as they could. You still see an oil sheen in the water a little bit. But the headaches are continuing after these two or three months now. I've never had them. I need to go get checked out.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">It makes complete sense you're worried, KM. We help people in situations just like this. Would you like help making sure you get a fair assessment and the compensation you deserve?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I would like to if I could. I've never asked anybody for nothing until now.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Of course you can. Asking for help here is the right thing. Can I get your first and last name?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">KM, [last name].</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. What's the full property address where this happened?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">[address], Independence, Louisiana, 70443.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you. A member of our intake team will reach out within 24 to 48 hours.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">One more request, please. I screen for spam callers, so when y'all call, if you could text me, I know it's y'all.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Of course. Someone from our team will call you back. Thank you for trusting us today.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Thank you. Goodbye.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Take care, KM. We're here for you.</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- CALL 2: AI FASCINATION -->
-    <div class="call-card-qbr" onclick="playCall(this)">
-      <div class="ccq-waveform variant2"></div>
-      <div class="ccq-overlay">
-        <span class="ccq-pill variant2">❤️ Engagement · Elderly caller, Saturday</span>
-        <div>
-          <div class="ccq-quote">"Bye. Thank you so much. Can't wait to hear from you."</div>
-          <div class="ccq-title">A full intake from a distressed, elderly caller who felt heard.</div>
-          <div class="ccq-desc">First-time Allstate claim, home unlivable from water damage. She poured out the story to Hank, thanked him repeatedly, hung up reassured — on a Saturday with no ICHQ staff on the line.</div>
-          <div class="ccq-meta-row">
-            <span class="ccq-tag">12 min</span>
-            <span class="ccq-tag">Urgent</span>
-            <span class="ccq-tag">Sat · 3:38 PM CT</span>
+    <!-- CALL 2: AI ENGAGEMENT + HIGH VALUE -->
+    <div class="call-col">
+      <div class="call-card-qbr" onclick="playCall(this)">
+        <div class="ccq-waveform variant2"></div>
+        <div class="ccq-overlay">
+          <span class="ccq-pill variant2">❤️ Engagement · Elderly Allstate caller</span>
+          <div>
+            <div class="ccq-quote">"Bye. Thank you so much. Can't wait to hear from you."</div>
+            <div class="ccq-title">76-year-old LT — gutted home, hotel-to-hotel, $18K Allstate payout.</div>
+            <div class="ccq-desc">First Allstate claim in 21 years. Home unlivable, engineer's report dismissed. She gave Hank the entire story, thanked him repeatedly, hung up reassured — Saturday 3:38 PM with no ICHQ staff on the line.</div>
+            <div class="ccq-fee">
+              <span class="fee-label">Est. contingency fee · 33% + LA bad-faith uplift</span>
+              <span class="fee-value">$26K – $66K</span>
+            </div>
+            <div class="ccq-meta-row">
+              <span class="ccq-tag">12 min</span>
+              <span class="ccq-tag">Urgent</span>
+              <span class="ccq-tag">Sat · 3:38 PM CT</span>
+            </div>
           </div>
         </div>
+        <div class="ccq-play-btn"></div>
+        <audio class="ccq-audio-hidden" preload="none" src="assets/call-water-damage.mp3"></audio>
       </div>
-      <div class="ccq-play-btn"></div>
-      <audio class="ccq-audio-hidden" preload="none" src="assets/call-water-damage.mp3"></audio>
+      <div class="call-transcript" id="transcript-water">
+        <div class="ct-header"><span>Transcript · anonymized</span><span style="font-weight:500; letter-spacing:0; text-transform:none; color:var(--text3); font-size:0.74rem;">▲ collapses on stop</span></div>
+        <div class="ct-body">
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hi there. You've reached Hair Shunnarah trial attorneys. How can I help you today?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I'm calling about uh to get information for a homeowner's dispute lawyer. Are you homeowner's insurance dispute?</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Yes, we help homeowners with insurance disputes, claims for denied, delayed, or underpaid property damage. Would you mind sharing what happened with your homeowners?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Okay. My name is LT and I live in Violet, Louisiana. I've been with Allstate Insurance for over 21 years, and this is my first claim on my homeowner's policy. They do not want to acknowledge things that were damaged in my house, and they didn't give me enough money to complete my home. I'm still living from hotel to hotel. I'm a disabled senior citizen and I think they've taken advantage of me. I hired an engineering inspector to evaluate my damages. I have a full report and I presented that to Allstate, and my adjuster will not acknowledge that report. So I need an attorney.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, I'm so sorry you're going through this, especially with your home and health on the line. Can you tell me when the damage first happened?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">May 31st. It was the holiday. I called Roto-Rooter to try to get the water out of my house — the hot water heater. They did the mitigation. I signed a document for Allstate to pay them. The quote was $5–6,000 to $13,000. Then after they finished, they sent a bill for $22,000. And Allstate paid them all that money. Whereas they only gave me $18,007.59 for my damages. And it's not enough money to complete my house. My entire hardwood floors were removed. I don't have any kitchen cabinets at all. My house is not livable.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">That sounds incredibly overwhelming, LT.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">It gave me a mental breakdown. I'm 76 years old, believe it or not. I don't know how I was standing up so strong, but it's getting to the best of me. I can't handle it anymore. So that's why I'm seeking legal advice.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, you've carried so much on your own. No one should have to fight this hard, especially at your age. Would you like help making sure you get a fair assessment and the compensation you deserve?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, I need help because I cry. I find myself crying all day long because I'm not getting anywhere. And every time I go look at my home, I just break down in tears.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Thank you, LT. You've shared so much and it really helps us understand what you're facing. Can I get your email address?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, it's [email].</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Could you please provide the full property address where the damage occurred?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">[address] in Violet, Louisiana, 70092.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">A member of our intake team will reach out within 24 to 48 hours. Is there anything else you'd like to share?</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I have documentation to back up everything I said. I have all receipts. I have the documents from Roto-Rooter, the engineer's report I paid $1,100 for. And Allstate do not want to acknowledge it. They just keep shadow boxing me, never calling me back. It's really overwhelming. I'm mentally exhausted. I'll have a heart attack. I'm on a lot of medication. I have my knees replaced. I have a rod in my spine. I'm a 76-year-old woman. I've tried my best.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">LT, your strength through all this is remarkable. You've done everything right and your documentation will be a huge help for our team. Someone will reach out within the next day or two. You're in good hands now.</span></div>
+          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Bye. Thank you so much. Can't wait to hear from you.</span></div>
+          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Bye, LT. Thank you for reaching out. We'll be in touch very soon.</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -477,25 +563,34 @@
 </div>
 
 <script>
-/* Click-to-play audio on call cards */
+/* Click-to-play audio on call cards; transcript opens with it */
 function playCall(card){
   const audio = card.querySelector('audio');
   if(!audio) return;
-  // Pause any other playing card
+  const transcript = card.parentElement.querySelector('.call-transcript');
+  // Pause + collapse any other playing card
   document.querySelectorAll('.call-card-qbr.playing').forEach(other => {
     if(other !== card){
       other.classList.remove('playing');
       const a = other.querySelector('audio'); if(a){ a.pause(); a.currentTime = 0; }
+      const t = other.parentElement.querySelector('.call-transcript'); if(t) t.classList.remove('open');
     }
   });
   if(audio.paused){
-    audio.play().then(()=>card.classList.add('playing')).catch(e=>console.error(e));
+    audio.play().then(()=>{
+      card.classList.add('playing');
+      if(transcript) transcript.classList.add('open');
+    }).catch(e=>console.error(e));
   } else {
     audio.pause();
     audio.currentTime = 0;
     card.classList.remove('playing');
+    if(transcript) transcript.classList.remove('open');
   }
-  audio.onended = () => card.classList.remove('playing');
+  audio.onended = () => {
+    card.classList.remove('playing');
+    if(transcript) transcript.classList.remove('open');
+  };
 }
 
 Chart.register(ChartDataLabels);
