@@ -74,6 +74,10 @@
   .momentum { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
   .momentum li { display:flex; gap:14px; align-items:flex-start; padding:14px 0; }
   .momentum .icon { flex-shrink:0; width:36px; height:36px; border-radius:8px; background:var(--bg2); color:var(--accent-deep); display:flex; align-items:center; justify-content:center; font-size:1.2em; font-weight:700; font-family:'Lora',serif; }
+  .momentum .icon-lockup { width:auto; min-width:108px; padding:0 10px; gap:6px; background:#FFFFFF; border:1px solid #E6DFD9; }
+  .momentum .icon-lockup .lockup-plus { color:var(--text3); font-family:'Inter',sans-serif; font-size:0.9em; font-weight:500; }
+  .momentum a { color:var(--accent-deep); text-decoration:underline; text-underline-offset:2px; }
+  .momentum a:hover { color:var(--accent); }
   .momentum .m-text { flex:1; }
   .momentum .m-title { font-weight:600; font-size:0.98em; }
   .momentum .m-sub { font-size:0.85em; color:var(--text2); margin-top:2px; }
@@ -493,10 +497,14 @@
       </div>
     </li>
     <li>
-      <div class="icon">V</div>
+      <div class="icon icon-lockup">
+        <img src="assets/logo_verizon.png" alt="Verizon" style="height:14px;">
+        <span class="lockup-plus">+</span>
+        <img src="assets/logo_yousquared.png" alt="YouSquared" style="height:16px;">
+      </div>
       <div class="m-text">
-        <div class="m-title">Verizon national partnership</div>
-        <div class="m-sub">YouSquared is Verizon's preferred AI phone agent.</div>
+        <div class="m-title">Verizon is now a distributor for YouSquared</div>
+        <div class="m-sub">Listed in the <a href="https://www.verizon.com/business/shop/marketplace" target="_blank" rel="noopener">Verizon Business Marketplace</a> alongside One Talk — enterprise customers can procure us directly on their Verizon bill.</div>
       </div>
     </li>
     <li>
