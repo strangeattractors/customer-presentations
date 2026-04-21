@@ -2,6 +2,24 @@
 
 Automate the boring parts, keep editorial judgment human-curated.
 
+## Quick start
+
+From anywhere, invoke the slash command:
+
+```
+/qbr <customer name or slug>
+```
+
+Claude drives the whole flow: identifies the customer, runs parallel research
+(Slack, Gmail, prod DB, customer web), asks a single batched question for the
+unknowables (onsite date, primary contact, flywheel on/off), harvests data,
+QAs lead values, drafts editorial content for review, builds the HTML, and
+pushes.
+
+The command definition lives at `~/.claude/commands/qbr.md`.
+
+The layers below are the plumbing `/qbr` orchestrates.
+
 ## Layer 1 — Data harvester
 
 ```bash
