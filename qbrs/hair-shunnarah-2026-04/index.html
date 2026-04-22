@@ -102,7 +102,17 @@
   .roadmap-nitty { margin:0 -8px; border-left:3px solid var(--gold); }
   .roadmap-example.open { max-height:520px; margin-bottom:16px; overflow-y:auto; }
   #referralExamples.open { max-height:640px; }
-  .roadmap-nitty.open { max-height:320px; padding:14px 20px; margin-bottom:16px; }
+  .roadmap-nitty.open { max-height:1400px; padding:14px 20px; margin-bottom:16px; overflow-y:auto; }
+  .roadmap-nitty details.contract-routing { margin:8px 0 4px 0; background:#FFFFFF; border:1px solid #E6DFD9; border-radius:6px; padding:6px 10px; }
+  .roadmap-nitty details.contract-routing > summary { cursor:pointer; font-size:0.82em; font-weight:600; color:var(--accent-deep); list-style:none; padding:2px 0; }
+  .roadmap-nitty details.contract-routing > summary::before { content:'▸ '; display:inline-block; width:14px; transition:transform 0.2s ease; }
+  .roadmap-nitty details.contract-routing[open] > summary::before { transform:rotate(90deg); }
+  .roadmap-nitty details.contract-routing table { width:100%; border-collapse:collapse; margin-top:8px; font-size:0.78em; }
+  .roadmap-nitty details.contract-routing th { text-align:left; padding:6px 8px; background:#F5F2EF; color:var(--accent-deep); font-weight:700; font-size:0.92em; border-bottom:1px solid #E6DFD9; }
+  .roadmap-nitty details.contract-routing td { padding:6px 8px; border-bottom:1px solid #EFEAE5; vertical-align:top; line-height:1.45; }
+  .roadmap-nitty details.contract-routing tr:last-child td { border-bottom:none; }
+  .roadmap-nitty details.contract-routing td:nth-child(2) { font-family:monospace; color:var(--text2); white-space:nowrap; }
+  .roadmap-nitty details.contract-routing td:nth-child(4) { font-weight:600; color:var(--accent-deep); }
   .roadmap-example .ct-header { padding:10px 18px; border-bottom:1px solid #E6DFD9; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; background:#FFFFFF; }
   .roadmap-example .ct-body { padding:14px 18px; }
   .roadmap-example .ct-turn { margin-bottom:8px; font-size:0.82rem; line-height:1.55; }
@@ -121,6 +131,11 @@
   .cc-notes .cc-author { color:var(--accent-deep); font-weight:600; margin-right:4px; }
   .roadmap-nitty ul { margin:0; padding-left:18px; color:var(--text); font-size:0.85em; line-height:1.7; }
   .roadmap-nitty li { margin-bottom:4px; }
+
+  /* Pace callout on chapter 1 */
+  .pace-callout { background:linear-gradient(135deg, rgba(232,184,125,0.2) 0%, rgba(224,122,95,0.12) 100%); border-left:3px solid var(--accent-deep); border-radius:0 8px 8px 0; padding:12px 16px; margin-bottom:14px; }
+  .pace-label { font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-deep); font-weight:700; margin-bottom:4px; }
+  .pace-body { font-size:0.85em; color:var(--text); line-height:1.5; }
 
   /* Referral candidates list (bullet 4 example panel) */
   .ref-tabs { display:flex; gap:6px; padding:10px 18px 0; background:#FFFFFF; border-bottom:1px solid #E6DFD9; position:sticky; top:0; z-index:2; }
@@ -620,12 +635,43 @@
         </div>
       </div>
       <div class="roadmap-nitty">
+        <div class="pace-callout">
+          <div class="pace-label">Pace check</div>
+          <div class="pace-body">At the current rate Hank hands over <strong>~3 qualified new-client leads per month</strong> — 10 in about <strong>3–4 months</strong>. In hurricane season (Jul–Nov) that rate nearly triples: <strong>6–7 / month</strong>, so 10 in <strong>about 6 weeks</strong>. Finishing this checklist is what puts those leads directly into signed retainers instead of voicemail hand-offs.</div>
+        </div>
         <ul>
           <li>Migrate HSTA to the YouSquared Team plan</li>
           <li>Migrate Hank to the dynamic prompt — verify the migration is successful (e.g. do call-transfer tool calls trigger appropriately? does Hank still qualify the right leads? does contract-send fire in the right context?)</li>
           <li>Reinstate signing tool</li>
           <li>Add PI contract to signing tool</li>
-          <li>Ensure Hank sends the correct contract in the correct situation</li>
+          <li>
+            Ensure Hank sends the correct contract in the correct situation
+            <details class="contract-routing">
+              <summary>View examples &amp; correct routing</summary>
+              <table>
+                <thead>
+                  <tr><th>Pattern</th><th>Conv</th><th>Summary</th><th>Right action</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Clean PI</td><td>530652</td><td>Car accident, untreated chest/stomach pain</td><td>SEND PI</td></tr>
+                  <tr><td>Clean property — hurricane</td><td>52347</td><td>Hurricane destroyed roof, insurer stopped responding</td><td>SEND PROP</td></tr>
+                  <tr><td>Clean property — water</td><td>145354</td><td>76yo disabled, Allstate underpaid on water damage</td><td>SEND PROP</td></tr>
+                  <tr><td>Non-storm first-party</td><td>52104</td><td>Truck crashed into home, insurer underpaying</td><td>SEND PROP — trigger is carrier dispute, not cause-of-loss</td></tr>
+                  <tr><td>Landlord-tenant property</td><td>73800</td><td>Landlord, tenant caused $100k damage + theft</td><td>SEND PROP — contract scope says "damages for properties", not limited to first-party</td></tr>
+                  <tr><td>Out-of-state property</td><td>274888</td><td>California homeowner, carrier uncooperative</td><td>SEND PROP — HSTA has nationwide coverage</td></tr>
+                  <tr><td>Low-recovery defensive</td><td>548740</td><td>Carrier accusing insured of misrep over stolen bike</td><td>NO CONTRACT — below threshold + defensive posture</td></tr>
+                  <tr><td>Commercial + agent fraud</td><td>404425</td><td>Commercial trucking claim + agent took $1,300</td><td>NO CONTRACT — commercial out of scope, low $</td></tr>
+                  <tr><td>Stolen auto, no injury</td><td>117172</td><td>Car stolen, no bodily injury</td><td>NO CONTRACT — fits neither retainer; see new-contract action item below</td></tr>
+                  <tr><td>Mass tort — Taxotere</td><td>507697</td><td>Chemo litigation active since 2020</td><td>NO CONTRACT — route to mass tort dept</td></tr>
+                  <tr><td>Mass tort — oil spill</td><td>593879</td><td>Commercial fisherman seeking oil-spill claim help</td><td>NO CONTRACT — route to mass tort dept</td></tr>
+                  <tr><td>Mass tort w/ property phrasing</td><td>530829</td><td>Smitty's oil, wants real-person callback, calls it "property"</td><td>NO CONTRACT — mass tort regardless of caller's phrasing</td></tr>
+                  <tr><td>Existing client property</td><td>573114</td><td>Existing client needs documents from his case</td><td>NO CONTRACT — transfer to main office</td></tr>
+                  <tr><td>Professional caller</td><td>576038</td><td>Opposing counsel asking for a specific attorney</td><td>NO CONTRACT — route / take message</td></tr>
+                </tbody>
+              </table>
+            </details>
+          </li>
+          <li>Create an auto-specific retainer for vehicle-only loss claims (e.g. stolen car, comprehensive loss without bodily injury) — currently falls between the PI contract (requires "injuries suffered") and the Property contract (scoped to real property / appraisal mechanism). Conv 117172 is a clean example of this gap.</li>
           <li>Mass-tort intakes (e.g. Smitty's Supply): confirm which active torts HSTA is signing, which attorney owns each, and whether the standard PI contract covers the sign-up or a tort-specific retainer is required</li>
           <li>Create intake hunt group phone number (on RingCentral / equivalent)</li>
           <li>Ensure that during working hours, Hank transfers qualified leads who aren't ready to sign up to the intake hunt group</li>
