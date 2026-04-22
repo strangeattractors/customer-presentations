@@ -623,13 +623,42 @@
 
   <div style="margin-top:20px;">
 
-    <!-- BULLET 1 -->
+    <!-- BULLET 1 — voice AI foundation -->
     <div class="roadmap-item">
       <div class="roadmap-row">
         <div class="roadmap-num">1</div>
         <div class="roadmap-what">
+          Hank is best-in-class voice AI.
+          <div class="sub">Sub-second latency, natural turn-taking, empathic prosody — callers routinely don't realize they're talking to AI.</div>
+        </div>
+        <div class="roadmap-impact">
+          Everything else in this roadmap rides on how human the voice feels. Smooth speech is the foundation.
+          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
+        </div>
+      </div>
+      <div class="roadmap-nitty">
+        <div class="pace-callout">
+          <div class="pace-label">Target</div>
+          <div class="pace-body"><strong>&lt; 800ms P50 response latency</strong> · graceful barge-in · zero same-day regressions. Today Hank beats the latency target on most calls; improvements ship weekly.</div>
+        </div>
+        <ul>
+          <li><strong>Sub-second response latency</strong> — P50 &lt; 800ms from end-of-caller-speech to Hank's first spoken token. The single biggest determinant of "feels human" vs "feels like a bot."</li>
+          <li><strong>Natural turn detection</strong> — don't cut callers off mid-thought; accommodate long pauses for distressed or elderly speakers (LT's 12-minute Saturday call is exhibit A)</li>
+          <li><strong>Graceful barge-in</strong> — if the caller interrupts, Hank stops cleanly and listens; no talk-over, no restart</li>
+          <li><strong>Empathic prosody</strong> — intonation, emphasis, and pacing match a human intake specialist on their best day, not monotone TTS</li>
+          <li><strong>Accent &amp; dialect handling</strong> — Southern LA speech patterns, "y'all", Cajun cadence, hands-free car audio, background noise</li>
+          <li><strong>Continuous quality monitoring</strong> — every call scored for smoothness + caller-satisfaction signals; regressions flagged same-day and rolled back</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BULLET 2 — sign up new clients -->
+    <div class="roadmap-item">
+      <div class="roadmap-row">
+        <div class="roadmap-num">2</div>
+        <div class="roadmap-what">
           Hank qualifies, signs up &amp; transfers <em>new</em> clients.
-          <div class="sub">PI contract signed on the call; warm hand-off to your intake team.</div>
+          <div class="sub">First in line on every new caller, 24/7. Contract signed on the call; warm hand-off to your intake team.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
           </div>
@@ -678,6 +707,7 @@
           </li>
           <li>Create an auto-specific retainer for vehicle-only loss claims (e.g. stolen car, comprehensive loss without bodily injury) — currently falls between the PI contract (requires "injuries suffered") and the Property contract (scoped to real property / appraisal mechanism). Conv 117172 is a clean example of this gap.</li>
           <li>Mass-tort intakes (e.g. Smitty's Supply): confirm which active torts HSTA is signing, which attorney owns each, and whether the standard PI contract covers the sign-up or a tort-specific retainer is required</li>
+          <li>Update RingCentral call-forwarding so Hank answers first on every inbound line — during business hours too, not just after-hours overflow</li>
           <li>Create intake hunt group phone number (on RingCentral / equivalent)</li>
           <li>Ensure that during working hours, Hank transfers qualified leads who aren't ready to sign up to the intake hunt group</li>
           <li>Ensure Hank sends confirmation texts to qualified leads — so they commit, and so they have a trace of whose number represents them</li>
@@ -697,13 +727,13 @@
       </div>
     </div>
 
-    <!-- BULLET 2 -->
+    <!-- BULLET 3 — update/transfer existing clients -->
     <div class="roadmap-item">
       <div class="roadmap-row">
-        <div class="roadmap-num">2</div>
+        <div class="roadmap-num">3</div>
         <div class="roadmap-what">
           Hank updates &amp; transfers <em>existing</em> clients.
-          <div class="sub">Recognizes the caller by phone, greets by name, routes to their case manager.</div>
+          <div class="sub">First in line on every returning caller. Recognized by phone, greeted by name, routed to their case manager.</div>
           <div class="rm-chips">
             <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
           </div>
@@ -719,6 +749,7 @@
           <li>Obtain Filevine API access</li>
           <li>Confirm which fields Hank should access and be able to share / discuss with existing clients</li>
           <li>Obtain phone numbers of staff so Hank knows exactly who to transfer to</li>
+          <li>Create a hunt group so existing-client "talk to someone" requests ring all available phones at once when their case manager doesn't pick up</li>
           <li>Add staff to the YouSquared team account so calendars can be synced — Hank can schedule into their calendar when they can't be reached live</li>
           <li>Implement outbound texts / calls as client cases progress — proactive status updates</li>
         </ul>
@@ -753,41 +784,6 @@
           <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">Yes, I wanted to know if the engineer's report went through.</span></div>
           <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx"><strong>Good news — Gretchen just noted yesterday that the adjuster has acknowledged the report and is revising scope. Let me connect you straight to her.</strong> One moment.</span></div>
           <div class="ct-turn ai"><span class="sp">Attorney GL</span><span class="tx">LT? It's Gretchen. I do have an update — the adjuster has finally acknowledged the engineer's report. Let's walk through what that means for your claim…</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BULLET 3 -->
-    <div class="roadmap-item">
-      <div class="roadmap-row">
-        <div class="roadmap-num">3</div>
-        <div class="roadmap-what">
-          Hank is the front line on <em>all</em> calls.
-          <div class="sub">Phone system embedded; Hank qualifies, then the hunt group rings the right intake specialist or attorney.</div>
-          <div class="rm-chips">
-            <button class="rm-chip" data-target="example" onclick="toggleRoadmapPanel(this)">▸ see example call</button>
-          </div>
-        </div>
-        <div class="roadmap-impact">
-          Zero missed leads in storm spikes. Full visibility into every call, every outcome.
-          <button class="rm-chevron" data-target="nitty" onclick="toggleRoadmapPanel(this)" aria-label="Show next steps">▾</button>
-        </div>
-      </div>
-      <div class="roadmap-nitty">
-        <ul>
-          <li>Update RingCentral call-forwarding so Hank answers first on every line</li>
-          <li>Create a hunt group so "talk to someone" rings all available phones at once</li>
-        </ul>
-      </div>
-      <div class="roadmap-example">
-        <div class="ct-header"><span>Envisioned call · weekday 11 AM auto accident, Hank in prime time</span></div>
-        <div class="ct-body">
-          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Hair Shunnarah, this is Hank. How can I help?</span></div>
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">I was rear-ended yesterday by a city bus. My neck is killing me, I need a lawyer.</span></div>
-          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Auto accident with injury, public-entity defendant. That qualifies, and your case manager routing depends on where it happened. What's your first and last name and the city?</span></div>
-          <div class="ct-turn caller"><span class="sp">Caller</span><span class="tx">TB, Metairie.</span></div>
-          <div class="ct-turn ai"><span class="sp">Hank</span><span class="tx">Got it TB. <strong>Ringing the auto-injury hunt group now — someone will pick up in a few seconds, already briefed.</strong></span></div>
-          <div class="ct-turn ai"><span class="sp">Attorney</span><span class="tx">Hi TB, heard you got rear-ended by an RTA bus yesterday. Tell me about the neck pain — is it getting worse?</span></div>
         </div>
       </div>
     </div>
